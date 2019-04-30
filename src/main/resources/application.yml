@@ -9,3 +9,9 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      force-request: true
+      enabled: true
