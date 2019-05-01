@@ -30,7 +30,7 @@ public class FUserBasicController {
 
     @PostMapping("user/register.do")
     @ApiOperation(value = "注册用户" , notes = "实现用户注册")
-    public ResultVO save(@RequestParam("user") @ApiParam(name = "user" ,value = "用户相关键值对") FUserBasic user, @RequestParam("invitecode") @ApiParam(name = "invitecode", value = "邀请码") String inviteCode){
+    public ResultVO save(@RequestBody @ApiParam(name = "user" ,value = "用户相关键值对") FUserBasic user, @RequestBody @ApiParam(name = "invitecode", value = "邀请码") String inviteCode){
         return fUserBasicService.userRegister(user, inviteCode);
     }
 
