@@ -1,4 +1,4 @@
-package com.mit_pyramid.config;
+package com.mit.pyramid.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +22,6 @@ public class SwaggerConfig {
      */
     @Bean
     public Docket createDoc(){
-        return new Docket(DocumentationType.SWAGGER_2).apiInfo(createApi()).select().apis(RequestHandlerSelectors.basePackage("com.cc.mit_pyramid.controller" )).build();
+        return new Docket(DocumentationType.SWAGGER_2).apiInfo(createApi()).select().apis(RequestHandlerSelectors.basePackage("com.mit.pyramid.controller" )).build();
     }
 }
