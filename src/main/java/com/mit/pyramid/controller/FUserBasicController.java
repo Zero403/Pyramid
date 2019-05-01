@@ -1,5 +1,6 @@
 package com.mit.pyramid.controller;
 
+import com.mit.pyramid.common.vo.RegisterVO;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.entity.FUserBasic;
 import com.mit.pyramid.service.FUserBasicService;
@@ -30,8 +31,8 @@ public class FUserBasicController {
 
     @PostMapping("user/register.do")
     @ApiOperation(value = "注册用户" , notes = "实现用户注册")
-    public ResultVO save(@RequestBody @ApiParam(name = "user" ,value = "用户相关键值对") FUserBasic user, @RequestBody @ApiParam(name = "invitecode", value = "邀请码") String inviteCode){
-        return fUserBasicService.userRegister(user, inviteCode);
+        public ResultVO save(@RequestBody @ApiParam(name = "user" ,value = "用户相关键值对") RegisterVO user){
+        return fUserBasicService.userRegister(user);
     }
 
 }
