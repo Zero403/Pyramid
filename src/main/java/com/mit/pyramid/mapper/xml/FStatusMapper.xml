@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mit.pyramid.dao.FStatusMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.mit.pyramid.entity.FStatus">
+		<id column="id" property="id" />
+		<result column="sname" property="sname" />
+	</resultMap>
+
+</mapper>
