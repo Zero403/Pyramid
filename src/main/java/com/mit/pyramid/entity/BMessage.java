@@ -27,11 +27,11 @@ public class BMessage extends Model<BMessage> {
     /**
      * 0表示系统
      */
-	private Integer sendId;
-	private Integer orderId;
+	private Integer sendid;
+	private Integer orderid;
 	private String title;
 	private String discription;
-	private Date createTime;
+	private Date createtime;
     /**
      * 0表示已删除1表示未读2表示已读
      */
@@ -46,21 +46,6 @@ public class BMessage extends Model<BMessage> {
 		this.id = id;
 	}
 
-	public Integer getSendId() {
-		return sendId;
-	}
-
-	public void setSendId(Integer sendId) {
-		this.sendId = sendId;
-	}
-
-	public Integer getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(Integer orderId) {
-		this.orderId = orderId;
-	}
 
 	public String getTitle() {
 		return title;
@@ -78,12 +63,28 @@ public class BMessage extends Model<BMessage> {
 		this.discription = discription;
 	}
 
-	public Date getCreateTime() {
-		return createTime;
+	public Integer getSendid() {
+		return sendid;
 	}
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setSendid(Integer sendid) {
+		this.sendid = sendid;
+	}
+
+	public Integer getOrderid() {
+		return orderid;
+	}
+
+	public void setOrderid(Integer orderid) {
+		this.orderid = orderid;
+	}
+
+	public Date getCreatetime() {
+		return createtime;
+	}
+
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
 	}
 
 	public Integer getType() {

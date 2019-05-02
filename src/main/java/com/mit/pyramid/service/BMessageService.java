@@ -18,4 +18,6 @@ public interface BMessageService extends IService<BMessage> {
     ResultVO selectMyMessage(int uid, int type);
 
     ResultVO sendMessage(BMessage message);
+
+    ResultVO batchMessage(int type, int value, String title, String description);
 }

@@ -24,7 +24,7 @@ public class BPermission extends Model<BPermission> {
 	private Integer id;
 	private String permission;
 	private String url;
-	private Integer parentId;
+	private Integer parentid;
 
 
 	public Integer getId() {
@@ -51,12 +51,12 @@ public class BPermission extends Model<BPermission> {
 		this.url = url;
 	}
 
-	public Integer getParentId() {
-		return parentId;
+	public Integer getParentid() {
+		return parentid;
 	}
 
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
+	public void setParentid(Integer parentid) {
+		this.parentid = parentid;
 	}
 
 	@Override

@@ -1,7 +1,9 @@
 package com.mit.pyramid.controller;
 
-import org.springframework.stereotype.Controller;
+import com.mit.pyramid.common.vo.ResultVO;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -11,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Ery
  * @since 2019-05-01
  */
-@Controller
-@RequestMapping("/mit.pyramid/bPermission")
+@RestController
+@RequestMapping("/permission")
 public class BPermissionController {
-	
+
+    @GetMapping("/menu")
+    public ResultVO menu(){
+        return null;
+    }
 }

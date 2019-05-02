@@ -25,7 +25,7 @@ public class BUser extends Model<BUser> {
 	private String no;
 	private String password;
 	private String name;
-	private Integer roleId;
+	private Integer roleid;
     /**
      * 标记位1生效0无效
      */
@@ -64,12 +64,16 @@ public class BUser extends Model<BUser> {
 		this.name = name;
 	}
 
-	public Integer getRoleId() {
-		return roleId;
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
 	}
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
+	public Integer getRoleid() {
+		return roleid;
+	}
+
+	public void setRoleid(Integer roleid) {
+		this.roleid = roleid;
 	}
 
 	public Integer getFlag() {
