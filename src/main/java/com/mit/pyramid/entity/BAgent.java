@@ -1,11 +1,10 @@
 package com.mit.pyramid.entity;
 
-
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,7 +15,7 @@ import java.util.Date;
  * </p>
  *
  * @author Chen
- * @since 2019-05-02
+ * @since 2019-05-01
  */
 @TableName("b_agent")
 public class BAgent extends Model<BAgent> {
@@ -25,13 +24,14 @@ public class BAgent extends Model<BAgent> {
 
 	@TableId(value="id", type= IdType.AUTO)
 	private Integer id;
-	private String agentname;
-	private String agentcompany;
-	private String agentphone;
-
-//	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
-	private Date settleingtime;
+	@TableField("agent_name")
+	private String agentName;
+	@TableField("agent_company")
+	private String agentCompany;
+	@TableField("agent_provide")
+	private String agentProvide;
+	@TableField("settleing_time")
+	private Date settleingTime;
 
 
 	public Integer getId() {
@@ -42,36 +42,36 @@ public class BAgent extends Model<BAgent> {
 		this.id = id;
 	}
 
-	public String getAgentname() {
-		return agentname;
+	public String getAgentName() {
+		return agentName;
 	}
 
-	public void setAgentname(String agentname) {
-		this.agentname = agentname;
+	public void setAgentName(String agentName) {
+		this.agentName = agentName;
 	}
 
-	public String getAgentcompany() {
-		return agentcompany;
+	public String getAgentCompany() {
+		return agentCompany;
 	}
 
-	public void setAgentcompany(String agentcompany) {
-		this.agentcompany = agentcompany;
+	public void setAgentCompany(String agentCompany) {
+		this.agentCompany = agentCompany;
 	}
 
-	public String getAgentphone() {
-		return agentphone;
+	public String getAgentProvide() {
+		return agentProvide;
 	}
 
-	public void setAgentphone(String agentphone) {
-		this.agentphone = agentphone;
+	public void setAgentProvide(String agentProvide) {
+		this.agentProvide = agentProvide;
 	}
 
-	public Date getSettleingtime() {
-		return settleingtime;
+	public Date getSettleingTime() {
+		return settleingTime;
 	}
 
-	public void setSettleingtime(Date settleingtime) {
-		this.settleingtime = settleingtime;
+	public void setSettleingTime(Date settleingTime) {
+		this.settleingTime = settleingTime;
 	}
 
 	@Override
