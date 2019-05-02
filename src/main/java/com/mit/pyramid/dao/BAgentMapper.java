@@ -3,6 +3,7 @@ package com.mit.pyramid.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mit.pyramid.entity.BAgent;
+import org.apache.ibatis.annotations.Insert;
 
 /**
  * <p>
@@ -13,5 +14,8 @@ import com.mit.pyramid.entity.BAgent;
  * @since 2019-05-01
  */
 public interface BAgentMapper extends BaseMapper<BAgent> {
+
+    @Insert("INSERT INTO b_agent (agentname,agentcompany,agentprovide,settleingtime) VALUES (#{agentname},#{agentcompany},#{agentprovide},#{settleingtime})")
+    int insertAgent(BAgent agent);
 
 }
