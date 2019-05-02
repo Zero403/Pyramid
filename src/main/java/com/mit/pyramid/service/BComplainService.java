@@ -4,6 +4,8 @@ package com.mit.pyramid.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mit.pyramid.entity.BComplain;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -15,5 +17,7 @@ import com.mit.pyramid.entity.BComplain;
 public interface BComplainService extends IService<BComplain> {
 
 //    public BComplain listAllByPage(int page,int limit);
+
+    public List<BComplain> listByStatus(int status);
 	
 }
