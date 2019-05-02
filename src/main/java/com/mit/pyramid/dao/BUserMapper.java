@@ -13,4 +13,5 @@ import com.mit.pyramid.entity.BUser;
  */
 public interface BUserMapper extends BaseMapper<BUser> {
 
+
 }

@@ -1,6 +1,7 @@
 package com.mit.pyramid.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.entity.BUser;
 
 /**
@@ -12,5 +13,8 @@ import com.mit.pyramid.entity.BUser;
  * @since 2019-05-01
  */
 public interface BUserService extends IService<BUser> {
-	
+
+    ResultVO addUser(BUser user);
+
+
 }
