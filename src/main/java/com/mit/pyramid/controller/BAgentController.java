@@ -47,7 +47,7 @@ public class BAgentController {
     }
 
 
-    @ApiOperation(value = "代理商新增",notes = "实现代理商单条插入 agentname:代理商名字 agentcompany：代理商公司 agentprovide:代理商资助了啥 settleingtime：赞助时间")
+    @ApiOperation(value = "代理商新增",notes = "实现代理商单条插入 agentname:代理商名字 agentcompany：代理商公司 agentprovide:提供给代理商了啥 settleingtime：代理商入驻时间")
     @PostMapping("agent/add.do")
     public ResultVO addAgent(@RequestBody BAgent agent){
 

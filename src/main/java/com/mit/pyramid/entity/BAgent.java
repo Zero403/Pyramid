@@ -27,7 +27,7 @@ public class BAgent extends Model<BAgent> {
 	private Integer id;
 	private String agentname;
 	private String agentcompany;
-	private String agentprovide;
+	private String agentphone;
 
 //	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
@@ -58,12 +58,12 @@ public class BAgent extends Model<BAgent> {
 		this.agentcompany = agentcompany;
 	}
 
-	public String getAgentprovide() {
-		return agentprovide;
+	public String getAgentphone() {
+		return agentphone;
 	}
 
-	public void setAgentprovide(String agentprovide) {
-		this.agentprovide = agentprovide;
+	public void setAgentphone(String agentphone) {
+		this.agentphone = agentphone;
 	}
 
 	public Date getSettleingtime() {

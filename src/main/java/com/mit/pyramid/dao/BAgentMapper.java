@@ -15,7 +15,7 @@ import org.apache.ibatis.annotations.Insert;
  */
 public interface BAgentMapper extends BaseMapper<BAgent> {
 
-    @Insert("INSERT INTO b_agent (agentname,agentcompany,agentprovide,settleingtime) VALUES (#{agentname},#{agentcompany},#{agentprovide},#{settleingtime})")
+    @Insert("INSERT INTO b_agent (agentname,agentcompany,agentphone,settleingtime) VALUES (#{agentname},#{agentcompany},#{agentphone},#{settleingtime})")
     int insertAgent(BAgent agent);
 
 }

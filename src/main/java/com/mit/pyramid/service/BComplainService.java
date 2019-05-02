@@ -14,6 +14,7 @@ import java.util.List;
  * @author Chen
  * @since 2019-05-01
  */
+ 
 public interface BComplainService extends IService<BComplain> {
 
 //    public BComplain listAllByPage(int page,int limit);
