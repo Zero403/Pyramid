@@ -25,4 +25,7 @@ public interface FUserBasicMapper extends BaseMapper<FUserBasic> {
     @SelectKey(statement = "SELECT LAST_INSERT_ID() as id", resultType = Integer.class, keyProperty = "id",keyColumn = "id",before = false)
     Integer insertKey(FUserBasic fUserBasic);
 
+    @Select("select * from f_user_basic where phone = #{phone}")
+    FUserBasic selectByPhone(@Param("phone") String phone);
+
 }
