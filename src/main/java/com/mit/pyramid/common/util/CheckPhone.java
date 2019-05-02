@@ -1,5 +1,8 @@
 package com.mit.pyramid.common.util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class CheckPhone {
     public static boolean isMobileNO(String mobiles) {
         String telRegex = "[1][34578]\\d{9}";
@@ -8,5 +11,14 @@ public class CheckPhone {
             return false;
         } else
             return mobiles.matches(telRegex);
+    }
+
+    public boolean isNumeric(String str){
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(str);
+        if( !isNum.matches() ){
+            return false;
+        }
+        return true;
     }
 }

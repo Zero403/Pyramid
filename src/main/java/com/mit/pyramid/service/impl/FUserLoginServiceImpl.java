@@ -52,9 +52,6 @@ public class FUserLoginServiceImpl implements FUserLoginService {
                 //记录当前登录用户的详细信息
                 jedisUtil.setStr(token, JSON.toJSONString(user),1800);
                 //3、存储到Cookie
-                Cookie cookie=new Cookie("usertoken",token);
-                cookie.setPath("/");
-                response.addCookie(cookie);
                 FUserLoginhistory fUserLoginhistory = new FUserLoginhistory();
                 fUserLoginhistory.setLogintime(new Date());
                 fUserLoginhistory.setUid(user.getId());
