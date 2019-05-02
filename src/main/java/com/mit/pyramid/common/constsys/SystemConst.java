@@ -16,7 +16,7 @@ public class SystemConst {
     //秘钥
     public static final String TOKENKEY="PTeW11QpXc+IKUAcO8e8FA==";
 
-
+    public static final String PASS = "4484AD3CBA81DB0978D699139CB973B8";
 
 
 }

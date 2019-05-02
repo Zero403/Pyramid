@@ -13,12 +13,17 @@ public class InviteCodeAPI {
     public static Integer checkInviteCode(String inviteCode) {
         String uidString = AESUtil.dcodes(inviteCode, "invite");
 
-       try {
-           Integer uid = Integer.parseInt(uidString);
-           return uid;
-       } catch (Exception e) {
-           return -1;
-       }
+        try {
+            if (uidString != null && !uidString.equals("")) {
+                Integer uid = Integer.parseInt(uidString);
+                return uid;
+            } else {
+                return -1;
+            }
+        } catch (java.lang.NumberFormatException e) {
+            return -1;
+        }
+
 
     }
 
