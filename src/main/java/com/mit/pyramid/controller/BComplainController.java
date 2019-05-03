@@ -11,9 +11,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -40,4 +40,28 @@ public class BComplainController {
         return ResultUtil.exec(true, String.valueOf(complainPage.getTotal()),iPage.getRecords());
     }
 
+    @ApiOperation(value = "添加投诉",notes = "发送内容：必填：rid 被投诉人，投诉理由content 选填项：图片img1-6，其他内容不填")
+    @PostMapping("complain/add.do")
+    public ResultVO add(@RequestBody BComplain bComplain){
+
+        bComplain.setCreatedate(new Date());
+        bComplain.setUid(2);
+        bComplain.setStatus(0);
+        return bComplainService.save(bComplain)?ResultUtil.setOK("添加成功"):ResultUtil.setOK("添加失败");
+    }
+
+    @ApiOperation(value = "查询我发起的投诉进度",notes = "基本的分页操作")
+    @GetMapping("complain/mylist.do")
+    public ResultVO myList(@RequestParam("page") @ApiParam(name = "page",value = "页码") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "每页个数")int limit){
+
+        IPage<BComplain> iPage = bComplainService.page(new Page<BComplain>(page,limit),new QueryWrapper<BComplain>().eq("uid", 2).eq("status","0").orderByAsc("createdate"));
+        return ResultUtil.exec(true, "成功",iPage);
+    }
+    @ApiOperation(value = "查询我发起的投诉历史",notes = "基本的分页操作")
+    @GetMapping("complain/myhistory.do")
+    public ResultVO myhistory(@RequestParam("page") @ApiParam(name = "page",value = "页码") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "每页个数")int limit){
+
+        IPage<BComplain> iPage = bComplainService.page(new Page<BComplain>(page,limit),new QueryWrapper<BComplain>().eq("uid", 2).orderByAsc("createdate"));
+        return ResultUtil.exec(true, "成功",iPage);
+    }
 }
