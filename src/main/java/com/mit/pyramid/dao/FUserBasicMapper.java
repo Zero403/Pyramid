@@ -2,6 +2,7 @@ package com.mit.pyramid.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mit.pyramid.common.vo.BUserBasicVO;
 import com.mit.pyramid.entity.FUserBasic;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -33,4 +34,17 @@ public interface FUserBasicMapper extends BaseMapper<FUserBasic> {
 
     @Select("select * from f_user_basic f where f.flag=2 ")
     List<FUserBasic> selectIllgal(Page<FUserBasic> page);
+
+
+
+    //后台展示代码 @author Chen
+    @Select("SELECT ub.*,s.id status,s.sname FROM f_user_basic ub\n" +
+            "LEFT JOIN f_user_status us\n" +
+            "on ub.id=us.uid\n" +
+            "INNER JOIN f_status s\n" +
+            "on us.sid=s.id\n" +
+            "where s.id<400")
+    List<BUserBasicVO> selectAllByPage(Page<BUserBasicVO> page);
+
+
 }

@@ -18,4 +18,16 @@ public class LazyUserTask {
         // 将用户等级降低至指定等级
         // 给降级的用户发送通知消息
     }
+
+    // 每天早上8点刷新等级排名榜只显示前50
+    @Scheduled(cron = "0 0 8 ? * * *")
+    public void rankList(){
+
+    }
+
+    // 每天早上8点刷新邀请榜只显示前50
+    @Scheduled(cron = "0 0 8 ? * * *")
+    public void inviteList(){
+
+    }
 }

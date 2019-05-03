@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mit.pyramid.common.api.InviteCodeAPI;
 import com.mit.pyramid.common.util.AESUtil;
 import com.mit.pyramid.common.util.ResultUtil;
+import com.mit.pyramid.common.vo.BUserBasicVO;
 import com.mit.pyramid.common.vo.RegisterVO;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.dao.FUserInvitenubersMapper;
@@ -78,5 +79,37 @@ public class FUserBasicServiceImpl extends ServiceImpl<FUserBasicMapper, FUserBa
     public List<FUserBasic> userIllegal(Page<FUserBasic> page) {
         return baseMapper.selectIllgal(page);
     }
+
+    @Override
+    public List<BUserBasicVO> listByPage(Page<BUserBasicVO> page) {
+        return dao.selectAllByPage(page);
+    }
+
+    @Override
+    public int insertUser(FUserBasic userBasic, int status) {
+        dao.insert(userBasic);
+
+        FUserStatus userStatus = new FUserStatus();
+        userStatus.setUid(userBasic.getId());
+        userStatus.setSid(status);
+        statusdao.insert(userStatus);
+        return 1;
+    }
+
+//    @Override
+//    public int addBatch(List<BUserBasicVO> list) {
+//
+//        List<FUserBasic> list1 = null;
+//
+//        for(BUserBasicVO bUserBasicVO : list){
+//            FUserBasic userBasic = bUserBasicVO.getUserBasic();
+//            list1.add(userBasic);
+//        }
+//
+//
+//
+//
+//        return 0;
+//    }
 
 }
