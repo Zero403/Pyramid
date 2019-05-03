@@ -1,8 +1,5 @@
 package com.mit.pyramid.common.constsys;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @Author feri
  * @Date Created in 2019/4/28 17:30
@@ -34,5 +31,10 @@ public class SystemConst {
     public static final int UPTO11 = UPTO10 + 3 * 3;
     public static final int UPTO12 = UPTO11 + 3 * 3 * 3;
     public static final int UPTO13 = UPTO12 + 3 * 3 * 3;
+
+    /**
+     * 懒惰用户判断天数
+     */
+    public static final int LAZYDAYS = 7;
 
 }
