@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/message")
-@Api(value = "消息相关", tags = "管理消息")
+@Api(value = "app消息相关", tags = "管理消息")
 public class BMessageController {
 
     @Autowired
@@ -32,7 +32,7 @@ public class BMessageController {
     }
 
     @PostMapping("/sendmessage.do")
-    @ApiOperation(value = "发送消息", notes = "发送消息 sendId 发件人ID 系统为0, orderID收件人Id title标题 discription内容 其他内容不要有")
+    //@ApiOperation(value = "发送消息 ", notes = "发送消息 sendId 发件人ID 系统为0, orderID收件人Id title标题 discription内容 其他内容不要有")
     public ResultVO sendMessage(@RequestBody BMessage message){
         return messageService.sendMessage(message);
     }

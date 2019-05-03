@@ -37,6 +37,12 @@ public class BRoleController {
         return roleService.findroleList();
     }
 
+    @GetMapping("/rlist.do")
+    @ApiOperation(value = "全部角色", notes = "获取全部角色 没有权限")
+    public List<BRole> rList(){
+        return roleService.list();
+    }
+
     @PostMapping("/rolelist.do")
     @ApiOperation(value = "增加角色", notes = "仅提供增加角色名与备注功能 角色权限方面到角色权限修改操作")
     public ResultVO addRole(@RequestBody BRole role){

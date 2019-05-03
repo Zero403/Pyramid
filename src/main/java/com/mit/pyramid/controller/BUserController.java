@@ -37,7 +37,7 @@ public class BUserController {
         return null;
     }
 
-    @GetMapping("buserlist.do")
+    @GetMapping("/buserlist.do")
     @ApiOperation(value = "查询后台用户列表", notes = "用户列表")
     public IPage<BUser> userList(@ApiParam(name = "页码",value = "type") @RequestParam("page") Integer page, @ApiParam(name = "每页条数", value = "limit") Integer limit){
         page = page == null ? 1 : page;

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.entity.BPermission;
+import com.mit.pyramid.entity.BUser;
 import com.mit.pyramid.service.BPermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,8 +31,9 @@ public class BPermissionController {
     private BPermissionService permissionService;
 
     @GetMapping("/menu.do")
+    @ApiOperation(value = "菜单", notes = "菜单 分一级跟二级菜单 一级菜单下有二级菜单列表")
     public ResultVO menu(){
-        return null;
+        return permissionService.menu(new BUser());
     }
 
     @GetMapping("/permissionlist.do")
