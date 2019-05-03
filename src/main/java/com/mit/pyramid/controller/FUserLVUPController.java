@@ -23,7 +23,7 @@ public class FUserLVUPController {
 
     @PostMapping("user/level/list.do")
     @ApiOperation(value = "用户可升级的列表", notes = "用户可升级的列表，建议使用<select>标签实现")
-    public ResultVO getCanUpLevel(@ApiParam(name = "token", value = "用户的token") @RequestBody String token){
+    public ResultVO getCanUpLevel(@ApiParam(name = "token", value = "用户的token") String token){
         TokenVO tokenVO = TokenUtil.parseToken(token);
         int uid = tokenVO.getUid();
         ResultVO resultVO = lvRequestService.canUptoLevel(uid);

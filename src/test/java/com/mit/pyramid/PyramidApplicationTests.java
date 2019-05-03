@@ -3,7 +3,9 @@ package com.mit.pyramid;
 import com.mit.pyramid.common.api.InviteCodeAPI;
 import com.mit.pyramid.common.constsys.SystemConst;
 import com.mit.pyramid.common.util.AESUtil;
+import com.mit.pyramid.common.util.TokenUtil;
 import com.mit.pyramid.common.vo.ResultVO;
+import com.mit.pyramid.common.vo.TokenVO;
 import com.mit.pyramid.dao.FUserBasicMapper;
 import com.mit.pyramid.dao.FUserStatusMapper;
 import com.mit.pyramid.entity.FUserBasic;
@@ -54,5 +56,13 @@ public class PyramidApplicationTests {
     public void upListTest() {
         ResultVO vo = service.canUptoLevel(2);
         System.out.println(vo);
+    }
+
+    @Test
+    public void TestToken() {
+        String token = TokenUtil.createToken(2, "123456789");
+        System.out.println(token);
+        TokenVO tokenVO = TokenUtil.parseToken(token);
+        System.out.println(tokenVO.getContent());
     }
 }
