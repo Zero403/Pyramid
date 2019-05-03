@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 @ResponseBody
 public class ExceptionAdvice {
+    @ExceptionHandler(NumberFormatException.class)
+    public void numberFormatException(NumberFormatException e) {
 
-    @ExceptionHandler
+    }
+
+    @ExceptionHandler(Exception.class)
     public ResultVO numberFormatException(Exception e) {
         return ResultUtil.setERROR(e.getMessage());
     }
