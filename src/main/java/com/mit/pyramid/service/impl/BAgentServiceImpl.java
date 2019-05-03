@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mit.pyramid.dao.BAgentMapper;
 import com.mit.pyramid.entity.BAgent;
 import com.mit.pyramid.service.BAgentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,5 +18,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BAgentServiceImpl extends ServiceImpl<BAgentMapper, BAgent> implements BAgentService {
-	
+
+    @Autowired
+    private BAgentMapper agentDao;
+    @Override
+    public int addAgent(BAgent agent) {
+//        agent.setSettleingtime(new Date());
+        return agentDao.insertAgent(agent);
+    }
 }

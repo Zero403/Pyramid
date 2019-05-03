@@ -12,5 +12,6 @@ import com.mit.pyramid.entity.BAgent;
  * @since 2019-05-01
  */
 public interface BAgentService extends IService<BAgent> {
-	
+
+    int addAgent(BAgent agent);
 }
