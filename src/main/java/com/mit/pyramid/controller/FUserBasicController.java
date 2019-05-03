@@ -1,5 +1,7 @@
 package com.mit.pyramid.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.vo.RegisterVO;
@@ -32,6 +34,7 @@ public class FUserBasicController {
     @Autowired
     private FUserBasicService fUserBasicService;
 
+
     @PostMapping("user/register.do")
     @ApiOperation(value = "注册用户" , notes = "实现用户注册")
         public ResultVO save(@RequestBody @ApiParam(name = "user" ,value = "用户相关键值对") RegisterVO user){
@@ -47,4 +50,19 @@ public class FUserBasicController {
         return ResultUtil.exec(list.getRecords().size() > 0,"",list);
     }
 
+    @PostMapping("user/findInvitor.do")
+    @ApiOperation(value = "查询我的邀请")
+    public ResultVO invitorList(@RequestParam("page") @ApiParam(name = "page",value = "起始页数") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "条数")int count){
+        IPage<FUserBasic> list = fUserBasicService.page(new Page<FUserBasic>(page, count), new QueryWrapper<FUserBasic>().eq("inviterid", "2"));
+
+        return ResultUtil.exec(list.getTotal() > 0,"",list);
+    }
+
+    @PostMapping("user/findInvited.do")
+    @ApiOperation(value = "查询被我审核的")
+    public ResultVO invitedList(@RequestParam("page") @ApiParam(name = "page",value = "起始页数") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "条数")int count){
+        IPage<FUserBasic> list = fUserBasicService.page(new Page<FUserBasic>(page, count), new QueryWrapper<FUserBasic>().eq("inviterid", "2"));
+
+        return ResultUtil.exec(list.getTotal() > 0,"",list);
+    }
 }
