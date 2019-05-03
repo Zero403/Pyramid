@@ -79,4 +79,9 @@ public class FUserBasicServiceImpl extends ServiceImpl<FUserBasicMapper, FUserBa
         return baseMapper.selectIllgal(page);
     }
 
+    @Override
+    public List<FUserBasic> userLazy(int days) {
+        return baseMapper.selectLazy(days);
+    }
+
 }

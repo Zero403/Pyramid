@@ -31,6 +31,14 @@ public interface FUserBasicMapper extends BaseMapper<FUserBasic> {
     @Select("select * from f_user_basic where phone = #{phone}")
     FUserBasic selectByPhone(@Param("phone") String phone);
 
+    /**
+     * 分页查询违规用户
+     * @param page
+     * @return
+     */
     @Select("select * from f_user_basic f where f.flag=2 ")
     List<FUserBasic> selectIllgal(Page<FUserBasic> page);
+
+    @Select("select * from f_user_basic f where DAYOFYEAR(NOW()) > DAYOFYEAR(f.createdate) + #{day}")
+    List<FUserBasic> selectLazy(int day);
 }

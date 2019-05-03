@@ -21,4 +21,6 @@ public interface FUserBasicService extends IService<FUserBasic> {
     ResultVO userRegister(RegisterVO user);
 
     List<FUserBasic> userIllegal(Page<FUserBasic> page);
+
+    List<FUserBasic> userLazy(int days);
 }
