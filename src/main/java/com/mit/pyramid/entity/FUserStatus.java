@@ -1,5 +1,7 @@
 package com.mit.pyramid.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
@@ -18,6 +20,7 @@ public class FUserStatus extends Model<FUserStatus> {
 
     private static final long serialVersionUID = 1L;
 
+	@TableId(value="uid", type= IdType.AUTO)
 	private Integer uid;
 	private Integer sid;
 
