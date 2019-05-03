@@ -3,7 +3,6 @@ package com.mit.pyramid.common.util;
 import com.alibaba.fastjson.JSON;
 import com.mit.pyramid.common.constsys.SystemConst;
 import com.mit.pyramid.common.vo.TokenVO;
-import org.json.JSONObject;
 
 import java.util.Date;
 import java.util.Random;
