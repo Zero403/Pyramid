@@ -12,8 +12,16 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -40,16 +48,6 @@ public class BComplainController {
         return ResultUtil.exec(true, String.valueOf(complainPage.getTotal()),iPage.getRecords());
     }
 
-    @ApiOperation(value = "添加投诉",notes = "发送内容：必填：rid 被投诉人，投诉理由content 选填项：图片img1-6，其他内容不填")
-    @PostMapping("complain/add.do")
-    public ResultVO add(@RequestBody BComplain bComplain){
-
-        bComplain.setCreatedate(new Date());
-        bComplain.setUid(2);
-        bComplain.setStatus(0);
-        return bComplainService.save(bComplain)?ResultUtil.setOK("添加成功"):ResultUtil.setOK("添加失败");
-    }
-
     @ApiOperation(value = "查询我发起的投诉进度",notes = "基本的分页操作")
     @GetMapping("complain/mylist.do")
     public ResultVO myList(@RequestParam("page") @ApiParam(name = "page",value = "页码") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "每页个数")int limit){
@@ -63,5 +61,60 @@ public class BComplainController {
 
         IPage<BComplain> iPage = bComplainService.page(new Page<BComplain>(page,limit),new QueryWrapper<BComplain>().eq("uid", 2).orderByAsc("createdate"));
         return ResultUtil.exec(true, "成功",iPage);
+    }
+
+    @ApiOperation(value = "添加投诉",notes = "发送内容：必填：被投诉人rid，投诉理由content 选填项：图片fileList，其他内容不填")
+    @RequestMapping("complain/photoupload.do")
+    public ResultVO upload(@ApiParam(value = "imglist",name = "imglist")@RequestParam("imglist") List<MultipartFile> imglist, @RequestBody BComplain bComplain, HttpServletRequest request, String token) {
+
+        bComplain.setCreatedate(new Date());
+        bComplain.setUid(2);
+        bComplain.setStatus(0);
+        int count = 1;
+
+        // 保存图片资源
+        for (MultipartFile upfile:imglist) {
+            // 获取上传文件的文件名
+            String fileName = upfile.getOriginalFilename();
+
+            String path = request.getServletContext().getRealPath("/");
+            System.out.println(path);
+            File parentPath = new File(path);
+            // 获取父级目录的路径
+            path = parentPath.getParent() + "/webapp/images";
+
+            File dirPath = new File(path);
+            if (!dirPath.exists()) {
+                dirPath.mkdirs();
+            }
+            //upfile.getInputStream()
+            File file = new File(path, fileName);
+            try {
+                // 保存文件
+                upfile.transferTo(file);
+            } catch (IllegalStateException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            Method[] methods = bComplain.getClass().getDeclaredMethods();
+            for (Method method:methods) {
+                if (method.getName().startsWith("get") && method.getName().endsWith(String.valueOf(count))) {
+                    try {
+                        method.invoke(bComplain,path);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                    count += 1;
+                }
+            }
+
+        }
+
+        return bComplainService.save(bComplain)?ResultUtil.setOK("添加成功"):ResultUtil.setOK("添加失败");
     }
 }
