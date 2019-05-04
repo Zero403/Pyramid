@@ -61,16 +61,28 @@ public class BUserLevelDownController {
         BUser user = (BUser)SecurityUtils.getSubject().getPrincipal();
         int lid = fUserStatus.getSid();
         // 降级并且重置邀请人数
-        QueryWrapper<FUserInvitenubers> uid = new QueryWrapper<FUserInvitenubers>().eq("uid", user.getId());
-        FUserInvitenubers fUserInvitenubers = this.fUserInvitenubers.list(uid).get(0);
-        fUserInvitenubers.setInvitenumbers((Integer) SystemConst.EXP.get(lid - 1));
-        this.fUserInvitenubers.updateById(fUserInvitenubers);
-        fUserStatusService.updateById(fUserStatus);
+        // 特殊等级
+        if (SystemConst.SPECIALLEVEL.contains(lid)){
+            fUserStatus.setSid(lid);
+            QueryWrapper<FUserInvitenubers> uid = new QueryWrapper<FUserInvitenubers>().eq("uid", user.getId());
+            FUserInvitenubers fUserInvitenubers = this.fUserInvitenubers.list(uid).get(0);
+            fUserInvitenubers.setInvitenumbers(SystemConst.EXP.get(lid - 1));
+            this.fUserInvitenubers.updateById(fUserInvitenubers);
+            fUserStatusService.updateById(fUserStatus);
+            // 非特殊等级时
+        } else if (lid > 100) {
+            fUserStatus.setSid(lid);
+            QueryWrapper<FUserInvitenubers> uid = new QueryWrapper<FUserInvitenubers>().eq("uid", user.getId());
+            FUserInvitenubers fUserInvitenubers = this.fUserInvitenubers.list(uid).get(0);
+            fUserInvitenubers.setInvitenumbers(SystemConst.EXP.get(lid));
+            this.fUserInvitenubers.updateById(fUserInvitenubers);
+            fUserStatusService.updateById(fUserStatus);
+        }
 
         // 发送降级通知
         BMessage message = new BMessage();
         message.setCreatetime(new Date());
-        message.setDiscription("由于您长时间未登录，等级降低至" + (lid - 1));
+        message.setDiscription("您的等级被管理员降低至" + (lid - 1));
         message.setOrderid(fUserStatus.getUid());
         message.setSendid(0);
         message.setTitle("系统消息");
