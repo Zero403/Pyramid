@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mit.pyramid.common.util.ImportExcel;
 import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.entity.BAgent;
@@ -64,7 +65,7 @@ public class BAgentController {
             // 获取上传文件的输入流
             InputStream inputStream = mFile.getInputStream();
             // 调用工具类中方法，读取excel文件中数据
-            List<Map<String, Object>> sourceList = com.cc.utils.ImportExcel.readExcel(fileName, inputStream);
+            List<Map<String, Object>> sourceList = ImportExcel.readExcel(fileName, inputStream);
 
             // 将对象先转为json格式字符串，然后再转为List<SysUser> 对象
             ObjectMapper objMapper = new ObjectMapper();

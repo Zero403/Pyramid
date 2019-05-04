@@ -44,7 +44,7 @@ public class LazyUserTask {
             if (SystemConst.SPECIALLEVEL.contains(id)){
                 fUserStatus.setSid(id - 1);
                 fUserStatusService.updateById(fUserStatus);
-            // 非特殊等级时
+                // 非特殊等级时
             } else if (id > 100) {
                 fUserStatus.setSid(id - 1);
                 QueryWrapper<FUserInvitenubers> uid = new QueryWrapper<FUserInvitenubers>().eq("uid", user.getId());
@@ -72,18 +72,6 @@ public class LazyUserTask {
                 recordService.save(bRecord);
             }
         }
-
-    }
-
-    // 每天早上8点刷新等级排名榜只显示前50
-    @Scheduled(cron = "0 0 8 ? * * *")
-    public void rankList(){
-
-    }
-
-    // 每天早上8点刷新邀请榜只显示前50
-    @Scheduled(cron = "0 0 8 ? * * *")
-    public void inviteList(){
 
     }
 }
