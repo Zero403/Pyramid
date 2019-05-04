@@ -4,18 +4,15 @@ import com.mit.pyramid.common.constsys.SystemConst;
 import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.dao.*;
+import com.mit.pyramid.entity.BMessage;
 import com.mit.pyramid.entity.FLvupcheck;
-import com.mit.pyramid.entity.FStatus;
 import com.mit.pyramid.entity.FUserStatus;
+import com.mit.pyramid.service.BMessageService;
 import com.mit.pyramid.service.BProportionService;
 import com.mit.pyramid.service.FUserLVupService;
-import org.apache.logging.log4j.status.StatusData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -34,10 +31,10 @@ public class FUserLVupServiceImpl implements FUserLVupService {
     private FLvupcheckMapper checkDao;
 
     @Autowired
-    private BMessageMapper messageDao;
+    private BProportionService bProportionService;
 
     @Autowired
-    private BProportionService bProportionService;
+    private BMessageService messageService;
 
     @Override
     public ResultVO lvUp(int uid, int sid) {
@@ -92,6 +89,14 @@ public class FUserLVupServiceImpl implements FUserLVupService {
         check.setLowuid(uid);
         check.setHeightuid(spec.getUid());
         check.setStatus(0);
+        check.setSid(sid);
         checkDao.insert(check);
+        BMessage bMessage = new BMessage();
+        bMessage.setType(1);
+        bMessage.setSendid(1);
+        bMessage.setOrderid(uid);
+        bMessage.setTitle("您的升级需要审核");
+        bMessage.setDiscription("您此次升级需要联系此人进行审核：" + checkDao.myCheck(uid).checkingToString());
+        messageService.sendMessage(bMessage);
     }
 }
