@@ -2,15 +2,12 @@ package com.mit.pyramid.task;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mit.pyramid.common.constsys.SystemConst;
-import com.mit.pyramid.dao.FStatusMapper;
-import com.mit.pyramid.dao.FUserStatusMapper;
 import com.mit.pyramid.entity.*;
 import com.mit.pyramid.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

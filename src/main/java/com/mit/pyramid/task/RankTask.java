@@ -14,11 +14,14 @@ public class RankTask {
     @Scheduled(cron = "0 0 8 ? * * *")
     public void rankList(){
 
+        fUserBasicService.rankList();
     }
 
     // 每天早上8点刷新邀请榜只显示前50
     @Scheduled(cron = "0 0 8 ? * * *")
     public void inviteList(){
+
+        fUserBasicService.inviteList();
 
     }
 

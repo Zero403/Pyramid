@@ -8,9 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mit.pyramid.common.util.ImportExcel;
 import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.vo.BUserBasicVO;
+import com.mit.pyramid.common.vo.BUserRankVO;
 import com.mit.pyramid.common.vo.RegisterVO;
 import com.mit.pyramid.common.vo.ResultVO;
-import com.mit.pyramid.common.vo.UserLevelDownVO;
 import com.mit.pyramid.entity.FUserBasic;
 import com.mit.pyramid.entity.FUserStatus;
 import com.mit.pyramid.service.FUserBasicService;
@@ -21,7 +21,6 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.io.InputStream;
 import java.util.List;
@@ -156,6 +155,28 @@ public class FUserBasicController {
             return ResultUtil.exec(false,"导入失败",0);
         }
 
+
+    }
+
+    //下面是后台的！！！！！@author Chen
+    @GetMapping("buser/rankByPage.do")
+    @ApiOperation(value = "后台等级排名")
+    public ResultVO rankByPage(@RequestParam("page") @ApiParam(name = "page",value = "页码") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "每页条数")int limit){
+        List<BUserRankVO> list = fUserBasicService.rankList();
+
+        List<BUserRankVO> list1 = list.subList((page - 1) * limit, limit * page);
+        return ResultUtil.exec(true, String.valueOf(list.size()),list1);
+
+    }
+
+    //下面是后台的！！！！！@author Chen
+    @GetMapping("buser/inviteRankByPage.do")
+    @ApiOperation(value = "后台邀请排名")
+    public ResultVO levalRankByPage(@RequestParam("page") @ApiParam(name = "page",value = "页码") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "每页条数")int limit){
+        List<BUserRankVO> list = fUserBasicService.inviteList();
+
+        List<BUserRankVO> list1 = list.subList((page - 1) * limit, limit * page);
+        return ResultUtil.exec(true, String.valueOf(list.size()),list1);
 
     }
 
