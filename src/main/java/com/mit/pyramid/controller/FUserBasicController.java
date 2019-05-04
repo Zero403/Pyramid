@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mit.pyramid.common.util.ImportExcel;
 import com.mit.pyramid.common.util.ResultUtil;
+import com.mit.pyramid.common.util.TokenUtil;
 import com.mit.pyramid.common.vo.BUserBasicVO;
 import com.mit.pyramid.common.vo.BUserRankVO;
 import com.mit.pyramid.common.vo.RegisterVO;
@@ -177,6 +178,14 @@ public class FUserBasicController {
 
         List<BUserRankVO> list1 = list.subList((page - 1) * limit, limit * page);
         return ResultUtil.exec(true, String.valueOf(list.size()),list1);
+
+    }
+
+    @GetMapping("user/info.do")
+    @ApiOperation(value = "查询用户信息")
+    public ResultVO findInfo(String token){
+        FUserBasic user = fUserBasicService.getById(TokenUtil.parseToken(token).getUid());
+        return ResultUtil.exec(true, "",user);
 
     }
 
