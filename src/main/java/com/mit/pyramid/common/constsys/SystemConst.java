@@ -1,5 +1,9 @@
 package com.mit.pyramid.common.constsys;
 
+import io.swagger.models.auth.In;
+
+import java.util.*;
+
 /**
  * @Author feri
  * @Date Created in 2019/4/28 17:30
@@ -37,4 +41,21 @@ public class SystemConst {
      */
     public static final int LAZYDAYS = 7;
 
+    public static final List<Integer> SPECIALLEVEL = Arrays.asList(105,109,113);
+
+    public static Map<Integer,Integer> EXP = new HashMap<>();
+    static {
+        EXP.put(101,0);
+        EXP.put(102,UPTO2);
+        EXP.put(103,UPTO3);
+        EXP.put(104,UPTO4);
+        EXP.put(106,UPTO6);
+        EXP.put(107,UPTO7);
+        EXP.put(108,UPTO8);
+        EXP.put(110,UPTO10);
+        EXP.put(111,UPTO11);
+        EXP.put(112,UPTO12);
+        EXP.put(113,UPTO13);
+
+    }
 }
