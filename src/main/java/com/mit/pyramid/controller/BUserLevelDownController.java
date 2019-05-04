@@ -1,23 +1,24 @@
 package com.mit.pyramid.controller;
 
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mit.pyramid.common.constsys.SystemConst;
 import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.common.vo.UserLevelDownVO;
-import com.mit.pyramid.entity.BMessage;
-import com.mit.pyramid.entity.BUserLevelDown;
-import com.mit.pyramid.entity.FUserBasic;
-import com.mit.pyramid.service.BMessageService;
-import com.mit.pyramid.service.BUserLevelDownService;
-import com.mit.pyramid.service.FUserBasicService;
+import com.mit.pyramid.entity.*;
+import com.mit.pyramid.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,15 +35,58 @@ public class BUserLevelDownController {
     private BUserLevelDownService bUserLevelDownService;
 
     @Autowired
-    private FUserBasicService fUserBasicService;
+    private FUserStatusService fUserStatusService;
 
+    @Autowired
+    private BMessageService bMessageService;
 
-    @PostMapping("pagelist.do")
+    @Autowired
+    private BRecordService recordService;
+
+    @Autowired
+    private FUserInvitenubersService fUserInvitenubers;
+
+    @PostMapping("/pagelist.do")
     @ApiOperation(value = "分页展示所有降级消息")
     public ResultVO pagelist(@RequestParam("page") @ApiParam(name = "page",value = "起始页数") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "条数")int count){
         Page<UserLevelDownVO> list = new Page<>(page, count);
         list.setRecords(bUserLevelDownService.findAll(list));
 
         return ResultUtil.exec(list.getRecords().size() > 0,"",list);
+    }
+
+    @PostMapping("/down.do")
+    @ApiOperation(value = "手动降低用户等级",notes = "参数需要：目标用户sid，调整后的等级uid，需要登录后才能进行操作")
+    public ResultVO down(FUserStatus fUserStatus){
+        BUser user = (BUser)SecurityUtils.getSubject().getPrincipal();
+        int lid = fUserStatus.getSid();
+        // 降级并且重置邀请人数
+        QueryWrapper<FUserInvitenubers> uid = new QueryWrapper<FUserInvitenubers>().eq("uid", user.getId());
+        FUserInvitenubers fUserInvitenubers = this.fUserInvitenubers.list(uid).get(0);
+        fUserInvitenubers.setInvitenumbers((Integer) SystemConst.EXP.get(lid - 1));
+        this.fUserInvitenubers.updateById(fUserInvitenubers);
+        fUserStatusService.updateById(fUserStatus);
+
+        // 发送降级通知
+        BMessage message = new BMessage();
+        message.setCreatetime(new Date());
+        message.setDiscription("由于您长时间未登录，等级降低至" + (lid - 1));
+        message.setOrderid(fUserStatus.getUid());
+        message.setSendid(0);
+        message.setTitle("系统消息");
+        message.setType(1);
+        // 保存降级记录
+        BRecord bRecord = new BRecord();
+        bRecord.setContent("长时间未登录被降级至" + (lid -1));
+        bRecord.setCreatetime(new Date());
+        bRecord.setType(1);
+        bRecord.setCuid(user.getId());
+        bRecord.setUid(user.getId());
+
+        bMessageService.save(message);
+        recordService.save(bRecord);
+        fUserStatusService.updateById(fUserStatus);
+
+        return ResultUtil.setOK("调整成功");
     }
 }

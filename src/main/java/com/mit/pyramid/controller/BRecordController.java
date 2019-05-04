@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(("/record"))
-@Api(value = "用户奖励惩罚记录")
+@Api(value = "用户奖励惩罚记录",tags = "我的奖励/处罚")
 public class BRecordController {
     @Autowired
     private BRecordService bRecordService;
