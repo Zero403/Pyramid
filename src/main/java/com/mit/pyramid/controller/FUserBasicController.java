@@ -23,6 +23,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
@@ -189,4 +192,36 @@ public class FUserBasicController {
 
     }
 
+    @PutMapping("user/updateInfo.do")
+    @ApiOperation(value = "修改用户信息")
+    public ResultVO update(@RequestBody @ApiParam(name = "userBasic",value = "会员实体类") FUserBasic fUserBasic, @ApiParam(name = "headpic",value = "头像图片") MultipartFile upFile, String token, HttpServletRequest request) {
+        // 获取上传文件的文件名
+        String fileName = upFile.getOriginalFilename();
+
+        String path = request.getServletContext().getRealPath("/");
+        System.out.println(path);
+        File parentPath = new File(path);
+        // 获取父级目录的路径
+        path = parentPath.getParent() + "/webapp/images";
+
+        System.out.println("path == " + path);
+        File dirPath = new File(path);
+        if (!dirPath.exists()) {
+            dirPath.mkdirs();
+        }
+        //upfile.getInputStream()
+        File file = new File(path, fileName);
+        try {
+            // 保存文件
+            upFile.transferTo(file);
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        fUserBasic.setHeadpic(path);
+        return fUserBasicService.updateById(fUserBasic)?ResultUtil.setOK("修改成功"):ResultUtil.setERROR("修改失败");
+    }
 }
