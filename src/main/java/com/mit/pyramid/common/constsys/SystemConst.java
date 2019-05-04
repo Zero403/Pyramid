@@ -61,19 +61,5 @@ public class SystemConst {
      * JDK1.8新增特性，MAP常量的初始化
      */
     public static final Map<Integer,Integer> UPNEED = EXP;
-//
-//    static {
-//        UPNEED = new HashMap<>();
-//        UPNEED.put(102,UPTO2);
-//        UPNEED.put(103,UPTO3);
-//        UPNEED.put(104,UPTO4);
-//        UPNEED.put(106,UPTO6);
-//        UPNEED.put(107,UPTO7);
-//        UPNEED.put(108,UPTO8);
-//        UPNEED.put(110,UPTO10);
-//        UPNEED.put(111,UPTO11);
-//        UPNEED.put(112,UPTO12);
-//        UPNEED.put(113,UPTO13);
-//    }
 
 }
