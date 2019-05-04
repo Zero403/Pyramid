@@ -3,6 +3,7 @@ package com.mit.pyramid.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mit.pyramid.common.vo.BUserBasicVO;
+import com.mit.pyramid.common.vo.BUserRankVO;
 import com.mit.pyramid.common.vo.RegisterVO;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.entity.FUserBasic;
@@ -27,4 +28,11 @@ public interface FUserBasicService extends IService<FUserBasic> {
 //    int addBatch(List<BUserBasicVO> list);
     // 懒惰用户查询
     List<FUserBasic> userLazy(int days);
+
+
+    //后台邀请排行榜
+    List<BUserRankVO> inviteList();
+
+    //后台等级排行榜
+    List<BUserRankVO> rankList();
 }

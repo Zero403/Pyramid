@@ -3,6 +3,7 @@ package com.mit.pyramid.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mit.pyramid.common.vo.BUserBasicVO;
+import com.mit.pyramid.common.vo.BUserRankVO;
 import com.mit.pyramid.entity.FUserBasic;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -52,6 +53,32 @@ public interface FUserBasicMapper extends BaseMapper<FUserBasic> {
             "on us.sid=s.id\n" +
             "where s.id<400")
     List<BUserBasicVO> selectAllByPage(Page<BUserBasicVO> page);
+
+
+    //后台邀请榜代码 @author Chen
+    @Select("SELECT ub.username,ub.id uid,us.sid,ui.invitenumbers,s.sname  FROM f_user_basic ub\n" +
+            "LEFT JOIN f_user_status us\n" +
+            "on ub.id = us.uid\n" +
+            "INNER JOIN f_status s\n" +
+            "ON us.sid = s.id\n" +
+            "LEFT  JOIN f_user_invitenubers ui\n" +
+            "on ub.id=ui.uid\n" +
+            "WHERE us.sid<400\n" +
+            "ORDER BY ui.invitenumbers DESC,us.sid desc\n" +
+            "limit 50")
+    List<BUserRankVO> inviteList();
+
+    @Select("SELECT ub.username,ub.id uid,us.sid,ui.invitenumbers,s.sname  FROM f_user_basic ub\n" +
+            "LEFT JOIN f_user_status us\n" +
+            "on ub.id = us.uid\n" +
+            "INNER JOIN f_status s\n" +
+            "ON us.sid = s.id\n" +
+            "LEFT  JOIN f_user_invitenubers ui\n" +
+            "on ub.id=ui.uid\n" +
+            "WHERE us.sid<400\n" +
+            "ORDER BY us.sid desc,ui.invitenumbers DESC\n" +
+            "limit 50")
+    List<BUserRankVO> rankList();
 
 
 }

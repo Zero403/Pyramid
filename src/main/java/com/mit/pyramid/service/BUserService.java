@@ -16,5 +16,7 @@ public interface BUserService extends IService<BUser> {
 
     ResultVO addUser(BUser user);
 
+    void login(String userName, String password, boolean rememberMe);
+
 
 }

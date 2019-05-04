@@ -6,6 +6,7 @@ import com.mit.pyramid.common.api.InviteCodeAPI;
 import com.mit.pyramid.common.util.AESUtil;
 import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.vo.BUserBasicVO;
+import com.mit.pyramid.common.vo.BUserRankVO;
 import com.mit.pyramid.common.vo.RegisterVO;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.dao.FUserInvitenubersMapper;
@@ -83,6 +84,16 @@ public class FUserBasicServiceImpl extends ServiceImpl<FUserBasicMapper, FUserBa
     @Override
     public List<FUserBasic> userLazy(int days) {
         return baseMapper.selectLazy(days);
+    }
+
+    @Override
+    public List<BUserRankVO> inviteList() {
+        return dao.inviteList();
+    }
+
+    @Override
+    public List<BUserRankVO> rankList() {
+        return dao.rankList();
     }
 
     @Override
