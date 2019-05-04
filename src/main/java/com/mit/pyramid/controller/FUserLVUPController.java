@@ -2,9 +2,11 @@ package com.mit.pyramid.controller;
 
 import com.baomidou.mybatisplus.extension.api.R;
 import com.mit.pyramid.common.util.TokenUtil;
+import com.mit.pyramid.common.vo.LvUpRequestVO;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.common.vo.TokenVO;
 import com.mit.pyramid.service.FLVRequestService;
+import com.mit.pyramid.service.FUserLVupService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -21,6 +23,9 @@ public class FUserLVUPController {
     @Autowired
     private FLVRequestService lvRequestService;
 
+    @Autowired
+    private FUserLVupService lVupService;
+
     @PostMapping("user/level/list.do")
     @ApiOperation(value = "用户可升级的列表", notes = "用户可升级的列表，建议使用<select>标签实现")
     public ResultVO getCanUpLevel(@ApiParam(name = "token", value = "用户的token") String token){
@@ -30,5 +35,13 @@ public class FUserLVUPController {
         return resultVO;
     }
 
+
+    @PostMapping("user/level/up.do")
+    @ApiOperation(value = "升级用户",notes = "等级提升，特殊等级有")
+    public ResultVO lvUp(LvUpRequestVO upRequest) {
+        int uid = TokenUtil.parseToken(upRequest.getToken()).getUid();
+        int sid = upRequest.getSid();
+        return lVupService.lvUp(uid,sid);
+    }
 
 }
