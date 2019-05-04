@@ -12,8 +12,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 
 /**
  * <p>
@@ -33,8 +33,15 @@ public class BUserController {
 
     @PostMapping("/blogin.do")
     @ApiOperation(value = "用户登录", notes = "用户登录")
-    public ResultVO login(String no, String password){
-        return null;
+    public ResultVO login(String username, String password, boolean rememberMe){
+        boolean flag = true;
+        try {
+            //password = new SimpleHash("MD5", password, null, 5).toString();
+            bUserService.login(username, password, rememberMe);
+        }catch (Exception e){
+            flag = false;
+        }
+         return ResultUtil.exec(flag, flag ? "登录成功" : "用户或密码错误", null);
     }
 
     @GetMapping("/buserlist.do")
@@ -44,7 +51,6 @@ public class BUserController {
         limit = limit == null ? 20 : limit;
         Page<BUser> pages = new Page<>(page, limit);
         return bUserService.page(pages, null);
-
     }
 
     @PostMapping("/buseadd.do")

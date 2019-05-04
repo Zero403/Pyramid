@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Api(value = "登录退出进行的操作", tags = "登录退出")
+@Api(value = "升级操作", tags = "等级提升")
 public class FUserLVUPController {
 
     @Autowired

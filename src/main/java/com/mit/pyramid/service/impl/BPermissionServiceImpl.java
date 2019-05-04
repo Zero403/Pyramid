@@ -71,4 +71,6 @@ public class BPermissionServiceImpl extends ServiceImpl<BPermissionMapper, BPerm
         }
         return ResultUtil.exec(true, "", menu);
     }
+
+    public List<String> rolePermisssions(int rid){ return baseMapper.permissionList(rid);}
 }
