@@ -10,6 +10,7 @@ import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.vo.BUserBasicVO;
 import com.mit.pyramid.common.vo.RegisterVO;
 import com.mit.pyramid.common.vo.ResultVO;
+import com.mit.pyramid.common.vo.UserLevelDownVO;
 import com.mit.pyramid.entity.FUserBasic;
 import com.mit.pyramid.entity.FUserStatus;
 import com.mit.pyramid.service.FUserBasicService;
@@ -20,6 +21,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.io.InputStream;
 import java.util.List;
@@ -39,7 +41,6 @@ public class FUserBasicController {
 
     @Autowired
     private FUserBasicService fUserBasicService;
-
     @Autowired
     private FUserStatusService userStatusService;
 
@@ -73,6 +74,7 @@ public class FUserBasicController {
 
         return ResultUtil.exec(list.getTotal() > 0,"",list);
     }
+
 
 
     //下面是后台的！！！！！@author Chen

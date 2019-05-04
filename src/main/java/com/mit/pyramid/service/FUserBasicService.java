@@ -9,14 +9,6 @@ import com.mit.pyramid.entity.FUserBasic;
 
 import java.util.List;
 
-/**
- * <p>
- * 服务类
- * </p>
- *
- * @author Ery
- * @since 2019-05-01
- */
 public interface FUserBasicService extends IService<FUserBasic> {
 
     ResultVO userRegister(RegisterVO user);
@@ -33,4 +25,6 @@ public interface FUserBasicService extends IService<FUserBasic> {
 
 //    //后台批量插入会员记录 @auther Chen
 //    int addBatch(List<BUserBasicVO> list);
+    // 懒惰用户查询
+    List<FUserBasic> userLazy(int days);
 }

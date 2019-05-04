@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.io.Serializable;
 
 /**
  * <p>

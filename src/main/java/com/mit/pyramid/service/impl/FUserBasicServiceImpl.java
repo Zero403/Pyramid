@@ -81,6 +81,11 @@ public class FUserBasicServiceImpl extends ServiceImpl<FUserBasicMapper, FUserBa
     }
 
     @Override
+    public List<FUserBasic> userLazy(int days) {
+        return baseMapper.selectLazy(days);
+    }
+
+    @Override
     public List<BUserBasicVO> listByPage(Page<BUserBasicVO> page) {
         return dao.selectAllByPage(page);
     }
