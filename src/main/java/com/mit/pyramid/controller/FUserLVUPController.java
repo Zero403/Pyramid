@@ -1,6 +1,5 @@
 package com.mit.pyramid.controller;
 
-import com.baomidou.mybatisplus.extension.api.R;
 import com.mit.pyramid.common.util.TokenUtil;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.common.vo.TokenVO;
@@ -9,9 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

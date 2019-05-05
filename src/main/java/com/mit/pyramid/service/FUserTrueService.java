@@ -1,7 +1,6 @@
 package com.mit.pyramid.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.mit.pyramid.entity.BAgent;
 import com.mit.pyramid.entity.FUserTrue;
 
 /**

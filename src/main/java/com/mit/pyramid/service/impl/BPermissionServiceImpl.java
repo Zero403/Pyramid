@@ -9,7 +9,6 @@ import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.dao.BRolePermissionMapper;
 import com.mit.pyramid.entity.BPermission;
 import com.mit.pyramid.dao.BPermissionMapper;
-import com.mit.pyramid.entity.BProportion;
 import com.mit.pyramid.entity.BRolePermission;
 import com.mit.pyramid.entity.BUser;
 import com.mit.pyramid.service.BPermissionService;

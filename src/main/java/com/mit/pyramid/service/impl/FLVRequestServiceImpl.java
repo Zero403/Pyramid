@@ -7,7 +7,6 @@ import com.mit.pyramid.dao.FStatusMapper;
 import com.mit.pyramid.dao.FUserInvitenubersMapper;
 import com.mit.pyramid.dao.FUserStatusMapper;
 import com.mit.pyramid.entity.FStatus;
-import com.mit.pyramid.entity.FUserInvitenubers;
 import com.mit.pyramid.service.FLVRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.vo.ResultVO;
-import com.mit.pyramid.common.vo.UserLevelDownVO;
 import com.mit.pyramid.entity.BRecord;
 import com.mit.pyramid.service.BRecordService;
 import io.swagger.annotations.Api;

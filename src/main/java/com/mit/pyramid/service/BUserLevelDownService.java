@@ -2,9 +2,7 @@ package com.mit.pyramid.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.common.vo.UserLevelDownVO;
-import com.mit.pyramid.entity.BMessage;
 import com.mit.pyramid.entity.BUserLevelDown;
 
 import java.util.List;

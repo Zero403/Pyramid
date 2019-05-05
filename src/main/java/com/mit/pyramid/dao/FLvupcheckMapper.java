@@ -2,11 +2,7 @@ package com.mit.pyramid.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mit.pyramid.entity.FLvupcheck;
-import com.mit.pyramid.entity.FStatus;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
-import java.util.List;
 
 /**
  * <p>

@@ -4,16 +4,12 @@ import com.mit.pyramid.common.constsys.SystemConst;
 import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.dao.FLvupcheckMapper;
-import com.mit.pyramid.dao.FStatusMapper;
 import com.mit.pyramid.dao.FUserInvitenubersMapper;
 import com.mit.pyramid.dao.FUserStatusMapper;
-import com.mit.pyramid.entity.FStatus;
 import com.mit.pyramid.entity.FUserStatus;
 import com.mit.pyramid.service.FUserLVupService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class FUserLVupServiceImpl implements FUserLVupService {
 
