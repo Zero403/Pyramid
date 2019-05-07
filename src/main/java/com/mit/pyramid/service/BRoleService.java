@@ -1,11 +1,9 @@
 package com.mit.pyramid.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.mit.pyramid.common.vo.BRoleVO;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.entity.BRole;
 
-import java.util.List;
 
 /**
  * <p>

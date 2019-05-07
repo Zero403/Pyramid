@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.entity.BMessage;
 
-import java.util.List;
 
 /**
  * <p>

@@ -4,8 +4,10 @@ import com.mit.pyramid.common.api.InviteCodeAPI;
 import com.mit.pyramid.common.constsys.SystemConst;
 import com.mit.pyramid.common.util.AESUtil;
 import com.mit.pyramid.common.util.TokenUtil;
+import com.mit.pyramid.common.vo.CheckVO;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.common.vo.TokenVO;
+import com.mit.pyramid.dao.FLvupcheckMapper;
 import com.mit.pyramid.dao.FUserBasicMapper;
 import com.mit.pyramid.dao.FUserStatusMapper;
 import com.mit.pyramid.entity.FUserBasic;
@@ -64,5 +66,14 @@ public class PyramidApplicationTests {
         System.out.println(token);
         TokenVO tokenVO = TokenUtil.parseToken(token);
         System.out.println(tokenVO.getContent());
+    }
+
+    @Autowired
+    private FLvupcheckMapper checkDao;
+
+    @Test
+    public void TestCheckVO() {
+        CheckVO checkList = checkDao.myCheck(5);
+        System.out.println(checkList);
     }
 }

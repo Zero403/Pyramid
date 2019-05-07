@@ -23,8 +23,16 @@ public class FLvupcheck extends Model<FLvupcheck> {
 	private Integer id;
 	private Integer lowuid;
 	private Integer heightuid;
+	private Integer sid;
 	private Integer status;
 
+	public Integer getSid() {
+		return sid;
+	}
+
+	public void setSid(Integer sid) {
+		this.sid = sid;
+	}
 
 	public Integer getId() {
 		return id;

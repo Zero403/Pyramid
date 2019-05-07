@@ -1,7 +1,6 @@
 package com.mit.pyramid.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.mit.pyramid.common.vo.MenuVo;
 import com.mit.pyramid.common.vo.PermissionVO;
 import com.mit.pyramid.entity.BPermission;
 import org.apache.ibatis.annotations.Select;

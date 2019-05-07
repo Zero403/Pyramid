@@ -1,12 +1,12 @@
 package com.mit.pyramid.common.vo;
 
 public class CheckVO {
+
     private Integer id;
-    private Integer uid;
     private String uname;
     private String phone;
-    private String Level;
-    private Integer checking;
+    private String sname;
+    private Integer sid;
 
     public Integer getId() {
         return id;
@@ -14,14 +14,6 @@ public class CheckVO {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
     }
 
     public String getUname() {
@@ -40,19 +32,18 @@ public class CheckVO {
         this.phone = phone;
     }
 
-    public String getLevel() {
-        return Level;
+    public String getSname() {
+        return sname;
     }
 
-    public void setLevel(String level) {
-        Level = level;
+    public void setSname(String sname) {
+        this.sname = sname;
     }
 
-    public Integer getChecking() {
-        return checking;
-    }
-
-    public void setChecking(Integer checking) {
-        this.checking = checking;
+    public final String checkingToString() {
+        return "用户昵称：" + uname  +
+                ", 电话" + phone  +
+                ", 用户等级" + sname +
+                "请联系此人对您的升级进行审核";
     }
 }

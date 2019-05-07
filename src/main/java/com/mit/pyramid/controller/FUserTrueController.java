@@ -1,28 +1,15 @@
 package com.mit.pyramid.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mit.pyramid.common.util.ImportExcel;
 import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.util.TokenUtil;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.common.vo.TokenVO;
-import com.mit.pyramid.entity.BAgent;
 import com.mit.pyramid.entity.FUserTrue;
-import com.mit.pyramid.service.BAgentService;
 import com.mit.pyramid.service.FUserTrueService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>

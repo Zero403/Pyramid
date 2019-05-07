@@ -1,6 +1,7 @@
 package com.mit.pyramid.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.entity.FLvupcheck;
 import com.mit.pyramid.entity.FUserStatus;
 
@@ -18,4 +19,9 @@ public interface FLvupcheckService extends IService<FLvupcheck> {
 
     boolean uptoLV1(FUserStatus fUserStatus);
 
+    ResultVO checkList(Integer uid);
+
+    ResultVO myCheck(Integer uid);
+
+    ResultVO checkOK(int id, int flag);
 }

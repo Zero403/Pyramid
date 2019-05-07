@@ -1,9 +1,7 @@
 package com.mit.pyramid.service;
 
 import com.mit.pyramid.common.vo.ResultVO;
-import com.mit.pyramid.entity.FStatus;
 
-import java.util.List;
 
 public interface FLVRequestService {
 

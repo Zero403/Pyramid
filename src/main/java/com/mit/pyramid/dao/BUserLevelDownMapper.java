@@ -3,10 +3,7 @@ package com.mit.pyramid.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mit.pyramid.common.vo.UserLevelDownVO;
-import com.mit.pyramid.entity.BMessage;
 import com.mit.pyramid.entity.BUserLevelDown;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;

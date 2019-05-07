@@ -1,11 +1,8 @@
 package com.mit.pyramid.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mit.pyramid.dao.FUserStatusMapper;
 import com.mit.pyramid.dao.FUserTrueMapper;
-import com.mit.pyramid.entity.FUserStatus;
 import com.mit.pyramid.entity.FUserTrue;
-import com.mit.pyramid.service.FUserStatusService;
 import com.mit.pyramid.service.FUserTrueService;
 import org.springframework.stereotype.Service;
 
