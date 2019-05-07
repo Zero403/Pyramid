@@ -115,7 +115,7 @@ public class BComplainController {
             for (Method method:methods) {
                 if (method.getName().startsWith("set") && method.getName().endsWith(String.valueOf(count))) {
                     try {
-                        method.invoke(bComplain,path);
+                        method.invoke(bComplain,fileName);
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     } catch (InvocationTargetException e) {

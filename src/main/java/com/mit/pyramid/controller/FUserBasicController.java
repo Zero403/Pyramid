@@ -221,7 +221,7 @@ public class FUserBasicController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        fUserBasic.setHeadpic(path);
+        fUserBasic.setHeadpic(fileName);
 //        fUserBasic.setHeadpic(path);
 //        fUserBasic.setId(1);
         return ResultUtil.exec(fUserBasicService.updateById(fUserBasic),"修改用户信息",null);
