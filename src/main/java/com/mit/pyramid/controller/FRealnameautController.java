@@ -1,6 +1,7 @@
 package com.mit.pyramid.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mit.pyramid.common.constsys.SystemConst;
 import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.util.TokenUtil;
 import com.mit.pyramid.common.vo.ResultVO;
@@ -74,7 +75,7 @@ public class FRealnameautController {
             System.out.println(path);
             File parentPath = new File(path);
             // 获取父级目录的路径
-            path = parentPath.getParent() + "/pyramid/webapp/idcardimages";
+            path = SystemConst.FILEPATH;
 
             System.out.println("path == " + path);
             File dirPath = new File(path);

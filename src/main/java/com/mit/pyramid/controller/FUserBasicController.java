@@ -5,13 +5,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mit.pyramid.common.constsys.SystemConst;
 import com.mit.pyramid.common.util.ImportExcel;
 import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.util.TokenUtil;
-import com.mit.pyramid.common.vo.BUserBasicVO;
-import com.mit.pyramid.common.vo.BUserRankVO;
-import com.mit.pyramid.common.vo.RegisterVO;
-import com.mit.pyramid.common.vo.ResultVO;
+import com.mit.pyramid.common.vo.*;
 import com.mit.pyramid.entity.FUserBasic;
 import com.mit.pyramid.entity.FUserStatus;
 import com.mit.pyramid.service.FUserBasicService;
@@ -192,18 +190,20 @@ public class FUserBasicController {
 
     }
 
-    @PutMapping("user/updateInfo.do")
-    @ApiOperation(value = "修改用户信息")
-    public ResultVO update(@RequestBody @ApiParam(name = "userBasic",value = "会员实体类") FUserBasic fUserBasic, @ApiParam(name = "headpic",value = "头像图片") MultipartFile upFile, String token, HttpServletRequest request) {
+    @PutMapping("user/updatehead.do")
+    @ApiOperation(value = "修改用户头像")
+    public ResultVO updateHead(@RequestParam("headpic")@ApiParam(name = "headpic",value = "头像图片") MultipartFile headpic, String token, HttpServletRequest request) {
+        TokenVO tokenVO = TokenUtil.parseToken(token);
+        FUserBasic fUserBasic = fUserBasicService.getById(tokenVO.getUid());
         // 获取上传文件的文件名
-        String fileName = upFile.getOriginalFilename();
+        String fileName = headpic.getOriginalFilename();
 
         String path = request.getServletContext().getRealPath("/");
         System.out.println(path);
         File parentPath = new File(path);
         // 获取父级目录的路径
-        path = parentPath.getParent() + "/webapp/images";
-
+        // path = parentPath.getParent() + "/webapp/images";
+        path = SystemConst.FILEPATH;
         System.out.println("path == " + path);
         File dirPath = new File(path);
         if (!dirPath.exists()) {
@@ -213,7 +213,7 @@ public class FUserBasicController {
         File file = new File(path, fileName);
         try {
             // 保存文件
-            upFile.transferTo(file);
+            headpic.transferTo(file);
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -222,6 +222,16 @@ public class FUserBasicController {
             e.printStackTrace();
         }
         fUserBasic.setHeadpic(path);
-        return fUserBasicService.updateById(fUserBasic)?ResultUtil.setOK("修改成功"):ResultUtil.setERROR("修改失败");
+//        fUserBasic.setHeadpic(path);
+//        fUserBasic.setId(1);
+        return ResultUtil.exec(fUserBasicService.updateById(fUserBasic),"修改用户信息",null);
+    }
+    @PutMapping("user/updateInfo.do")
+    @ApiOperation(value = "修改用户除头像外信息")
+    public ResultVO update(@RequestBody @ApiParam(name = "fUserBasic",value = "用户信息类") FUserBasic fUserBasic, String token) {
+
+        TokenVO tokenVO = TokenUtil.parseToken(token);
+        fUserBasic.setId(tokenVO.getUid());
+        return ResultUtil.exec(fUserBasicService.updateById(fUserBasic),"修改用户信息",null);
     }
 }

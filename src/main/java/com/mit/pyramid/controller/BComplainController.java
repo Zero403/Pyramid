@@ -3,10 +3,15 @@ package com.mit.pyramid.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mit.pyramid.common.constsys.SystemConst;
+import com.mit.pyramid.common.util.CheckPhone;
 import com.mit.pyramid.common.util.ResultUtil;
+import com.mit.pyramid.common.util.TokenUtil;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.entity.BComplain;
+import com.mit.pyramid.entity.FUserBasic;
 import com.mit.pyramid.service.BComplainService;
+import com.mit.pyramid.service.FUserBasicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -37,6 +42,8 @@ public class BComplainController {
 
     @Autowired
     private BComplainService bComplainService;
+    @Autowired
+    private FUserBasicService fUserBasicService;
 
     @ApiOperation(value = "投诉列表",notes = "实现投诉的按状态分页展示(按时间升序)，status 投诉状态 0表示未审核 1 表示审核 点击审核按钮并对举报人进行处理（降级处理），2表示审核过，投诉理由不足驳回，1,2都要发消息反馈给投诉者")
     @GetMapping("complain/listbypage.do")
@@ -63,13 +70,19 @@ public class BComplainController {
         return ResultUtil.exec(true, "成功",iPage);
     }
 
-    @ApiOperation(value = "添加投诉",notes = "发送内容：必填：被投诉人rid，投诉理由content 选填项：图片fileList，其他内容不填")
-    @RequestMapping("complain/photoupload.do")
-    public ResultVO upload(@ApiParam(value = "imglist",name = "imglist")@RequestParam("imglist") List<MultipartFile> imglist, @RequestBody BComplain bComplain, HttpServletRequest request, String token) {
+    @ApiOperation(value = "添加投诉",notes = "发送内容：必填：被投诉人id(通过查询接口查询) rid，投诉理由content 选填项：图片fileList，其他内容不填")
+    @PostMapping("complain/photoupload.do")
+    public ResultVO upload(@ApiParam(value = "imglist",name = "imglist")@RequestParam("imglist") List<MultipartFile> imglist,
+                           @ApiParam(value = "rid",name = "rid")@RequestParam("rid") Integer rid,
+                           @ApiParam(value = "content",name = "content")@RequestParam("content") String content,
+                           HttpServletRequest request
+                           ) {
 
+        BComplain bComplain = new BComplain();
         bComplain.setCreatedate(new Date());
-        bComplain.setUid(2);
-        bComplain.setStatus(0);
+        bComplain.setStatus(1);
+        // bComplain.setUid(TokenUtil.parseToken(token).getUid());
+        bComplain.setUid(1);
         int count = 1;
 
         // 保存图片资源
@@ -81,7 +94,7 @@ public class BComplainController {
             System.out.println(path);
             File parentPath = new File(path);
             // 获取父级目录的路径
-            path = parentPath.getParent() + "/webapp/images";
+            path = SystemConst.FILEPATH;
 
             File dirPath = new File(path);
             if (!dirPath.exists()) {
@@ -101,7 +114,7 @@ public class BComplainController {
             }
             Method[] methods = bComplain.getClass().getDeclaredMethods();
             for (Method method:methods) {
-                if (method.getName().startsWith("get") && method.getName().endsWith(String.valueOf(count))) {
+                if (method.getName().startsWith("set") && method.getName().endsWith(String.valueOf(count))) {
                     try {
                         method.invoke(bComplain,path);
                     } catch (IllegalAccessException e) {
@@ -115,6 +128,19 @@ public class BComplainController {
 
         }
 
-        return bComplainService.save(bComplain)?ResultUtil.setOK("添加成功"):ResultUtil.setOK("添加失败");
+        return ResultUtil.exec(bComplainService.save(bComplain),"添加投诉",null);
     }
+
+    @ApiOperation(value = "查询用户",notes = "通过用户输入的投诉人id或者电话查询目标用户，查询为0时返回错误")
+    @GetMapping("complain/find.do")
+    public ResultVO find(@RequestParam("info") @ApiParam(name = "info",value = "查询信息") String info){
+        if (CheckPhone.isMobileNO(info)) {
+            FUserBasic phone = fUserBasicService.getOne(new QueryWrapper<FUserBasic>().eq("phone", info));
+            return ResultUtil.exec(phone != null,"查询",phone);
+        } else {
+            FUserBasic username = fUserBasicService.getOne(new QueryWrapper<FUserBasic>().eq("username", info));
+            return ResultUtil.exec(username != null,"查询",username);
+        }
+    }
+
 }
