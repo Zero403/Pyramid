@@ -62,4 +62,6 @@ public class SystemConst {
      */
     public static final Map<Integer,Integer> UPNEED = EXP;
 
+    public static final String FILEPATH="/home/file";
+
 }
