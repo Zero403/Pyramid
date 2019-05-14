@@ -30,6 +30,7 @@ public class FUserBasic extends Model<FUserBasic> {
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
 	private Date createdate;
 	private Integer inviterid;
+	private Integer outsider;
     /**
      * 0 非正式， 1 正常 ， 2违规
      */
@@ -37,6 +38,13 @@ public class FUserBasic extends Model<FUserBasic> {
 	private String infomation;
 	private String headpic;
 
+	public Integer getOutsider() {
+		return outsider;
+	}
+
+	public void setOutsider(Integer outsider) {
+		this.outsider = outsider;
+	}
 
 	public Integer getId() {
 		return id;
