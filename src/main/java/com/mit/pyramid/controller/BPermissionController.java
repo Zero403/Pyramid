@@ -9,6 +9,7 @@ import com.mit.pyramid.entity.BUser;
 import com.mit.pyramid.service.BPermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,8 @@ public class BPermissionController {
     @GetMapping("/menu.do")
     @ApiOperation(value = "菜单", notes = "菜单 分一级跟二级菜单 一级菜单下有二级菜单列表")
     public ResultVO menu(){
-        return permissionService.menu(new BUser());
+        BUser user = (BUser) SecurityUtils.getSubject().getPrincipal();
+        return permissionService.menu(user);
     }
 
     @GetMapping("/permissionlist.do")

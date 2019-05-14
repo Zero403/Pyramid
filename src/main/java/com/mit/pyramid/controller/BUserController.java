@@ -61,7 +61,7 @@ public class BUserController {
     }
 
     @GetMapping("/findbuser.do")
-    @ApiOperation(value = "用户查找", notes = "参数可以不用全部传完密码不能查")
+    @ApiOperation(value = "用户查找", notes = "参数可以不用全部传完密码不能查   page跟limit想分页就传  其他的选两三个想查的弄几个框就行不必要全都放上")
     public IPage<BUser> findUser(BUser user, Integer page, Integer limit){
         page = page == null ? 1 : page;
         limit = limit == null ? 20 : limit;
