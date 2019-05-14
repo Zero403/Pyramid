@@ -2,7 +2,7 @@ package com.mit.pyramid.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mit.pyramid.common.api.InviteCodeAPI;
+import com.mit.pyramid.common.util.InviteCodeUtils;
 import com.mit.pyramid.common.util.AESUtil;
 import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.vo.BUserBasicVO;
@@ -48,7 +48,7 @@ public class FUserBasicServiceImpl extends ServiceImpl<FUserBasicMapper, FUserBa
 
         FUserBasic fUserBasic = new FUserBasic();
 
-        Integer inviteId = InviteCodeAPI.checkInviteCode(user.getInvitecode());
+        Integer inviteId = InviteCodeUtils.checkInviteCode(user.getInvitecode());
 
         if(dao.selectByName(user.getUsername()) != null) {
             return ResultUtil.setERROR("注册失败，用户名重复");
@@ -62,6 +62,7 @@ public class FUserBasicServiceImpl extends ServiceImpl<FUserBasicMapper, FUserBa
         fUserBasic.setInviterid(inviteId);
         fUserBasic.setPassword(AESUtil.ecodes(user.getPassword(), "4484AD3CBA81DB0978D699139CB973B8"));
         fUserBasic.setCreatedate(new Date());
+        fUserBasic.setOutsider(1);
         fUserBasic.setFlag(0);
         dao.insertKey(fUserBasic);
         Integer uid = fUserBasic.getId();
