@@ -7,6 +7,7 @@ import com.mit.pyramid.common.constsys.SystemConst;
 import com.mit.pyramid.common.util.CheckPhone;
 import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.util.TokenUtil;
+import com.mit.pyramid.common.vo.BComplainVO;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.entity.BComplain;
 import com.mit.pyramid.entity.FUserBasic;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,17 +59,38 @@ public class BComplainController {
 
     @ApiOperation(value = "查询我发起的投诉进度",notes = "基本的分页操作")
     @GetMapping("complain/mylist.do")
-    public ResultVO myList(@RequestParam("page") @ApiParam(name = "page",value = "页码") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "每页个数")int limit){
-
+    public ResultVO myList(@RequestParam("page") @ApiParam(name = "page",value = "页码") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "每页个数")int limit, String token){
+        // int uid = TokenUtil.parseToken(token).getUid();
         IPage<BComplain> iPage = bComplainService.page(new Page<BComplain>(page,limit),new QueryWrapper<BComplain>().eq("uid", 2).eq("status","0").orderByAsc("createdate"));
-        return ResultUtil.exec(true, "成功",iPage);
+        IPage<BComplainVO> ipage2 = new Page<>();
+        List<BComplainVO> list = new ArrayList<BComplainVO>();
+        for (int i = 0; i < iPage.getRecords().size(); i++) {
+            list.add(BComplainVO.parseBComplain(iPage.getRecords().get(i)));
+        }
+        ipage2.setRecords(list);
+        ipage2.setCurrent(iPage.getCurrent());
+        ipage2.setPages(iPage.getPages());
+        ipage2.setSize(iPage.getSize());
+        ipage2.setTotal(iPage.getTotal());
+        return ResultUtil.exec(true, "成功",ipage2);
     }
     @ApiOperation(value = "查询我发起的投诉历史",notes = "基本的分页操作")
     @GetMapping("complain/myhistory.do")
-    public ResultVO myhistory(@RequestParam("page") @ApiParam(name = "page",value = "页码") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "每页个数")int limit){
-
+    public ResultVO myhistory(@RequestParam("page") @ApiParam(name = "page",value = "页码") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "每页个数")int limit, String token){
+        int uid = TokenUtil.parseToken(token).getUid();
         IPage<BComplain> iPage = bComplainService.page(new Page<BComplain>(page,limit),new QueryWrapper<BComplain>().eq("uid", 2).orderByAsc("createdate"));
-        return ResultUtil.exec(true, "成功",iPage);
+        IPage<BComplainVO> ipage2 = new Page<>();
+        List<BComplainVO> list = new ArrayList<BComplainVO>();
+        for (int i = 0; i < iPage.getRecords().size(); i++) {
+            list.add(BComplainVO.parseBComplain(iPage.getRecords().get(i)));
+        }
+        ipage2.setRecords(list);
+        ipage2.setCurrent(iPage.getCurrent());
+        ipage2.setPages(iPage.getPages());
+        ipage2.setSize(iPage.getSize());
+        ipage2.setTotal(iPage.getTotal());
+
+        return ResultUtil.exec(true, "成功",ipage2);
     }
 
     @ApiOperation(value = "添加投诉",notes = "发送内容：必填：被投诉人id(通过查询接口查询) rid，投诉理由content 选填项：图片fileList，其他内容不填")
