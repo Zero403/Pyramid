@@ -39,9 +39,15 @@ public class MyShiroRealm extends AuthorizingRealm {
 
 		String name = (String)token.getPrincipal();
 		// 根据用户名从数据库中查询密码
-		String password = userDao.selectOne(new QueryWrapper<BUser>().eq("no", name)).getPassword();
+		BUser user = null;
+		String password = null;
+		try {
+			user = userDao.selectList(new QueryWrapper<BUser>().eq("no", name)).get(0);
+			password = user.getPassword();
+		}catch (Exception e){}
+
 		// 创建认证对象
-		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(name, password, this.getName());
+		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, this.getName());
 
 		return info;
 	}

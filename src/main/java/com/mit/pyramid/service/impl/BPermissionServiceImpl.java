@@ -67,6 +67,7 @@ public class BPermissionServiceImpl extends ServiceImpl<BPermissionMapper, BPerm
                 if(parentName.equals(pVO.getParentName()))pVOS.add(pVO);
             }
             m.setPermissions(pVOS);
+            menu.add(m);
         }
         return ResultUtil.exec(true, "", menu);
     }
