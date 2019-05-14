@@ -29,6 +29,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * <p>
@@ -111,7 +112,8 @@ public class BComplainController {
         for (MultipartFile upfile:imglist) {
             // 获取上传文件的文件名
             String fileName = upfile.getOriginalFilename();
-
+            Random random = new Random();
+            fileName = new Date().getTime() + (random.nextInt() + 99) + fileName;
             String path = request.getServletContext().getRealPath("/");
             System.out.println(path);
             File parentPath = new File(path);
