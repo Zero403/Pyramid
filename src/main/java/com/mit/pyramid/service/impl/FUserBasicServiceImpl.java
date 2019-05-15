@@ -67,7 +67,7 @@ public class FUserBasicServiceImpl extends ServiceImpl<FUserBasicMapper, FUserBa
         dao.insertKey(fUserBasic);
         Integer uid = fUserBasic.getId();
         FUserStatus fUserStatus = new FUserStatus();
-        fUserStatus.setSid(1);
+        fUserStatus.setSid(100);
         fUserStatus.setUid(uid);
         statusdao.insert(fUserStatus);
         FUserInvitenubers fUserInvitenubers = numberdao.selectById(inviteId);
