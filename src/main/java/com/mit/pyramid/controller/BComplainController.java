@@ -96,13 +96,14 @@ public class BComplainController {
     public ResultVO upload(@ApiParam(value = "imglist",name = "imglist")@RequestParam("imglist") List<MultipartFile> imglist,
                            @ApiParam(value = "rid",name = "rid")@RequestParam("rid") Integer rid,
                            @ApiParam(value = "content",name = "content")@RequestParam("content") String content,
-                           HttpServletRequest request,
                            String token) throws IOException {
 
         BComplain bComplain = new BComplain();
         bComplain.setCreatedate(new Date());
         bComplain.setStatus(1);
         bComplain.setUid(TokenUtil.parseToken(token).getUid());
+        bComplain.setContent(content);
+        bComplain.setRid(rid);
         int count = 1;
 
         // 保存图片资源
