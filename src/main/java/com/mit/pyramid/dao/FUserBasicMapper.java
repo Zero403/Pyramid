@@ -26,7 +26,7 @@ public interface FUserBasicMapper extends BaseMapper<FUserBasic> {
     FUserBasic selectByName(@Param("username") String username);
 
     @Insert("insert into f_user_basic values(null,#{username}, #{password}, #{phone}," +
-            "#{createdate}, #{inviterid}, #{flag},null,null)")
+            "#{createdate},#{outsider}, #{inviterid}, #{flag},null,null)")
     @SelectKey(statement = "SELECT LAST_INSERT_ID() as id", resultType = Integer.class, keyProperty = "id",keyColumn = "id",before = false)
     Integer insertKey(FUserBasic fUserBasic);
 

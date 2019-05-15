@@ -73,6 +73,10 @@ public class FUserBasicServiceImpl extends ServiceImpl<FUserBasicMapper, FUserBa
         FUserInvitenubers fUserInvitenubers = numberdao.selectById(inviteId);
         fUserInvitenubers.setInvitenumbers(fUserInvitenubers.getInvitenumbers() + 1);
         numberdao.updateById(fUserInvitenubers);
+        FUserInvitenubers newUser = new FUserInvitenubers();
+        newUser.setUid(uid);
+        newUser.setInvitenumbers(0);
+        numberdao.insert(newUser);
 
         return ResultUtil.setOK("注册成功！");
     }
@@ -112,21 +116,5 @@ public class FUserBasicServiceImpl extends ServiceImpl<FUserBasicMapper, FUserBa
         statusdao.insert(userStatus);
         return 1;
     }
-
-//    @Override
-//    public int addBatch(List<BUserBasicVO> list) {
-//
-//        List<FUserBasic> list1 = null;
-//
-//        for(BUserBasicVO bUserBasicVO : list){
-//            FUserBasic userBasic = bUserBasicVO.getUserBasic();
-//            list1.add(userBasic);
-//        }
-//
-//
-//
-//
-//        return 0;
-//    }
 
 }

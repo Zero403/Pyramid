@@ -63,6 +63,12 @@ public class FLvupcheckServiceImpl extends ServiceImpl<FLvupcheckMapper, FLvupch
         }
     }
 
+    @Override
+    public ResultVO checkById(int id) {
+        CheckVO checkVO = baseMapper.checkOne(id);
+        return ResultUtil.exec(checkVO != null, "该用户是否符合条件，请判断", checkVO);
+    }
+
     @Autowired
     private FUserStatusMapper userStatusDao;
 

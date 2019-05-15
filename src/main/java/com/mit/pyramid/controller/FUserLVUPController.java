@@ -64,10 +64,16 @@ public class FUserLVUPController {
 
     @GetMapping("user/level/checkok.do")
     @ApiOperation(value = "审核结果", notes = "是否同意审核")
-    public ResultVO checkFlag(@ApiParam(name = "checkResultVO", value = "审核结果，id:审批人提供的表id, flag:1--同意，2--不同意")CheckResultVO checkResultVO) {
+    public ResultVO checkFlag(@ApiParam(name = "checkResultVO", value = "审核结果，id:审批人提供的表id, flag:1--同意，2--不同意")@RequestBody CheckResultVO checkResultVO) {
         int cid = checkResultVO.getId();
         int flag = checkResultVO.getFlag();
         return checkService.checkOK(cid,flag);
+    }
+
+    @GetMapping("user/level/window.do")
+    @ApiOperation(value = "单列出来被审核者的信息，并弹窗", notes = "审核弹窗")
+    public ResultVO checkOne(@ApiParam(name = "id", value = "审核列表元素对应的id值") Integer id) {
+        return checkService.checkById(id);
     }
 
 }
