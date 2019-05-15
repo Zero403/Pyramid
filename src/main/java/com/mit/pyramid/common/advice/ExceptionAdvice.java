@@ -16,6 +16,7 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(Exception.class)
     public ResultVO numberFormatException(Exception e) {
+        e.printStackTrace();
         return ResultUtil.setERROR(e.getMessage());
     }
 }
