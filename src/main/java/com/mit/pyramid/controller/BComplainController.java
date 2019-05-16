@@ -59,7 +59,7 @@ public class BComplainController {
     @GetMapping("complain/mylist.do")
     public ResultVO myList(@RequestParam("page") @ApiParam(name = "page",value = "页码") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "每页个数")int limit, String token){
         int uid = TokenUtil.parseToken(token).getUid();
-        IPage<BComplain> iPage = bComplainService.page(new Page<BComplain>(page,limit),new QueryWrapper<BComplain>().eq("uid", uid).eq("status","0").orderByAsc("createdate"));
+        IPage<BComplain> iPage = bComplainService.page(new Page<BComplain>(page,limit),new QueryWrapper<BComplain>().eq("uid", uid).eq("status","0").orderByDesc("createdate"));
         IPage<BComplainVO> ipage2 = new Page<>();
         List<BComplainVO> list = new ArrayList<BComplainVO>();
         for (int i = 0; i < iPage.getRecords().size(); i++) {
@@ -76,7 +76,7 @@ public class BComplainController {
     @GetMapping("complain/myhistory.do")
     public ResultVO myhistory(@RequestParam("page") @ApiParam(name = "page",value = "页码") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "每页个数")int limit, String token){
         int uid = TokenUtil.parseToken(token).getUid();
-        IPage<BComplain> iPage = bComplainService.page(new Page<BComplain>(page,limit),new QueryWrapper<BComplain>().eq("uid", uid).orderByAsc("createdate"));
+        IPage<BComplain> iPage = bComplainService.page(new Page<BComplain>(page,limit),new QueryWrapper<BComplain>().eq("uid", uid).orderByDesc("createdate"));
         IPage<BComplainVO> ipage2 = new Page<>();
         List<BComplainVO> list = new ArrayList<BComplainVO>();
         for (int i = 0; i < iPage.getRecords().size(); i++) {
