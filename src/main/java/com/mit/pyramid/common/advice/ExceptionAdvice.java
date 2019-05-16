@@ -6,9 +6,16 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
+
 @ControllerAdvice
 @ResponseBody
 public class ExceptionAdvice {
+    @ExceptionHandler(IOException.class)
+    public ResultVO iOException(IOException e) {
+        return ResultUtil.setERROR("文件上传错误");
+    }
+
     @ExceptionHandler(NumberFormatException.class)
     public void numberFormatException(NumberFormatException e) {
 
@@ -16,6 +23,7 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(Exception.class)
     public ResultVO numberFormatException(Exception e) {
+        e.printStackTrace();
         return ResultUtil.setERROR(e.getMessage());
     }
 }

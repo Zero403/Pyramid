@@ -23,5 +23,7 @@ public interface FLvupcheckService extends IService<FLvupcheck> {
 
     ResultVO myCheck(Integer uid);
 
+    ResultVO checkById(int id);
+
     ResultVO checkOK(int id, int flag);
 }

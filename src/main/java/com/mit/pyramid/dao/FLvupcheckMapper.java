@@ -41,4 +41,14 @@ public interface FLvupcheckMapper extends BaseMapper<FLvupcheck> {
     @Update("update from f_lvupcheck set status = #{status} where id = ?")
     void checkResult(int id, int status);
 
+    @Select("SELECT c.id, c.sid,b.username uname, b.phone, s.sname from f_lvupcheck c\n" +
+            "inner JOIN f_user_basic b\n" +
+            "ON c.lowuid = b.id\n" +
+            "inner JOIN f_user_status us\n" +
+            "on b.id = us.uid\n" +
+            "inner JOIN f_status s\n" +
+            "on s.id = us.sid\n" +
+            "where c.id = #{id}")
+    CheckVO checkOne(@Param("id") Integer id);
+
 }

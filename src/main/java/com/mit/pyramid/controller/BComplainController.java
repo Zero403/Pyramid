@@ -26,9 +26,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -60,8 +58,8 @@ public class BComplainController {
     @ApiOperation(value = "查询我发起的投诉进度",notes = "基本的分页操作")
     @GetMapping("complain/mylist.do")
     public ResultVO myList(@RequestParam("page") @ApiParam(name = "page",value = "页码") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "每页个数")int limit, String token){
-        // int uid = TokenUtil.parseToken(token).getUid();
-        IPage<BComplain> iPage = bComplainService.page(new Page<BComplain>(page,limit),new QueryWrapper<BComplain>().eq("uid", 2).eq("status","0").orderByAsc("createdate"));
+        int uid = TokenUtil.parseToken(token).getUid();
+        IPage<BComplain> iPage = bComplainService.page(new Page<BComplain>(page,limit),new QueryWrapper<BComplain>().eq("uid", uid).eq("status","0").orderByDesc("createdate"));
         IPage<BComplainVO> ipage2 = new Page<>();
         List<BComplainVO> list = new ArrayList<BComplainVO>();
         for (int i = 0; i < iPage.getRecords().size(); i++) {
@@ -78,7 +76,7 @@ public class BComplainController {
     @GetMapping("complain/myhistory.do")
     public ResultVO myhistory(@RequestParam("page") @ApiParam(name = "page",value = "页码") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "每页个数")int limit, String token){
         int uid = TokenUtil.parseToken(token).getUid();
-        IPage<BComplain> iPage = bComplainService.page(new Page<BComplain>(page,limit),new QueryWrapper<BComplain>().eq("uid", 2).orderByAsc("createdate"));
+        IPage<BComplain> iPage = bComplainService.page(new Page<BComplain>(page,limit),new QueryWrapper<BComplain>().eq("uid", uid).orderByDesc("createdate"));
         IPage<BComplainVO> ipage2 = new Page<>();
         List<BComplainVO> list = new ArrayList<BComplainVO>();
         for (int i = 0; i < iPage.getRecords().size(); i++) {
@@ -93,47 +91,37 @@ public class BComplainController {
         return ResultUtil.exec(true, "成功",ipage2);
     }
 
-    @ApiOperation(value = "添加投诉",notes = "发送内容：必填：被投诉人id(通过查询接口查询) rid，投诉理由content 选填项：图片fileList，其他内容不填")
+    @ApiOperation(value = "添加投诉",notes = "发送内容：必填：被投诉人id(通过查询接口查询) rid，投诉理由content 选填项：图片imglist，其他内容不填")
     @PostMapping("complain/photoupload.do")
     public ResultVO upload(@ApiParam(value = "imglist",name = "imglist")@RequestParam("imglist") List<MultipartFile> imglist,
                            @ApiParam(value = "rid",name = "rid")@RequestParam("rid") Integer rid,
                            @ApiParam(value = "content",name = "content")@RequestParam("content") String content,
-                           HttpServletRequest request,
-                           String token) {
+                           String token) throws IOException {
 
         BComplain bComplain = new BComplain();
         bComplain.setCreatedate(new Date());
         bComplain.setStatus(1);
         bComplain.setUid(TokenUtil.parseToken(token).getUid());
+        bComplain.setContent(content);
+        bComplain.setRid(rid);
         int count = 1;
 
         // 保存图片资源
         for (MultipartFile upfile:imglist) {
             // 获取上传文件的文件名
             String fileName = upfile.getOriginalFilename();
-
-            String path = request.getServletContext().getRealPath("/");
-            System.out.println(path);
+            fileName = UUID.randomUUID().toString() + fileName;
+            String path = SystemConst.FILEPATH;
+            // System.out.println(path);
             File parentPath = new File(path);
-            // 获取父级目录的路径
-            path = SystemConst.FILEPATH;
-
             File dirPath = new File(path);
             if (!dirPath.exists()) {
                 dirPath.mkdirs();
             }
             //upfile.getInputStream()
             File file = new File(path, fileName);
-            try {
-                // 保存文件
-                upfile.transferTo(file);
-            } catch (IllegalStateException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            // 保存文件
+            upfile.transferTo(file);
             Method[] methods = bComplain.getClass().getDeclaredMethods();
             for (Method method:methods) {
                 if (method.getName().startsWith("set") && method.getName().endsWith(String.valueOf(count))) {
