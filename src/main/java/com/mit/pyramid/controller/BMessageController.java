@@ -1,5 +1,6 @@
 package com.mit.pyramid.controller;
 
+import com.mit.pyramid.common.util.TokenUtil;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.entity.BMessage;
 import com.mit.pyramid.service.BMessageService;
@@ -27,8 +28,8 @@ public class BMessageController {
 
     @GetMapping("/mymessage.do")
     @ApiOperation(value = "查询消息", notes = "uid查询者ID系统为0 type查询类型0全部1未读2已读3发送的消息规定类型外会出错")
-    public ResultVO myMessage(@RequestParam("uid")@ApiParam(name = "uid",value = "用户id") Integer uid, @RequestParam("type") @ApiParam(name = "type",value = "类型")Integer type){
-
+    public ResultVO myMessage(@RequestParam("token")@ApiParam(name = "token",value = "token") String token, @RequestParam("type") @ApiParam(name = "type",value = "类型")Integer type){
+        int uid = TokenUtil.parseToken(token).getUid();
         return messageService.selectMyMessage(uid, type);
     }
 

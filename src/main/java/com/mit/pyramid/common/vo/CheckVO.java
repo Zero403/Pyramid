@@ -44,6 +44,6 @@ public class CheckVO {
         return "用户昵称：" + uname  +
                 ", 电话" + phone  +
                 ", 用户等级" + sname +
-                "请联系此人对您的升级进行审核";
+                "\n请联系此人对您的升级进行审核";
     }
 }
