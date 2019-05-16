@@ -6,4 +6,5 @@ public interface FUserLVupService {
 
     ResultVO lvUp(int uid, int sid);
 
+    ResultVO getEXP(String token);
 }

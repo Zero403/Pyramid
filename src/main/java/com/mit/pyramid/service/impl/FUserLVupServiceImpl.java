@@ -2,6 +2,7 @@ package com.mit.pyramid.service.impl;
 
 import com.mit.pyramid.common.constsys.SystemConst;
 import com.mit.pyramid.common.util.ResultUtil;
+import com.mit.pyramid.common.util.TokenUtil;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.dao.*;
 import com.mit.pyramid.entity.BMessage;
@@ -13,6 +14,7 @@ import com.mit.pyramid.service.FUserLVupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -66,13 +68,22 @@ public class FUserLVupServiceImpl implements FUserLVupService {
                 return ResultUtil.setERROR("抱歉，当前等级人数较多。");
             } else {
                 if (exp > SystemConst.UPNEED.get(sid)) {
-                    lvUpOpe(uid,sid);
-
-                    return ResultUtil.setOK("恭喜!升级成功！！");
+                    sendCheck(uid,sid);
+                    return ResultUtil.setOK("等待审核");
                 }
             }
         }
         return ResultUtil.setERROR("您的条件不足以到达这个等级");
+    }
+
+    @Override
+    public ResultVO getEXP(String token) {
+        int uid = TokenUtil.parseToken(token).getUid();
+        int exp = inviteEXPDao.selectById(uid).getInvitenumbers() * 10;
+        Map<String, Integer> expMap = new HashMap<>();
+        expMap.put("exp", exp);
+        return ResultUtil.exec(true,"积分", expMap);
+
     }
 
     private void lvUpOpe(int uid, int sid) {
@@ -83,20 +94,24 @@ public class FUserLVupServiceImpl implements FUserLVupService {
     }
 
     private void sendCheck(int uid, int sid) {
-        int specId = sid == 100 ? 105:(sid == 105? 109 : 113);
+        int specId = sid < 105 ? 105:(sid < 109? 109 : 113);
         FUserStatus spec = userStatusDao.rand1SpecialUser(specId);
-        FLvupcheck check = new FLvupcheck();
-        check.setLowuid(uid);
-        check.setHeightuid(spec.getUid());
-        check.setStatus(0);
-        check.setSid(sid);
-        checkDao.insert(check);
-        BMessage bMessage = new BMessage();
-        bMessage.setType(1);
-        bMessage.setSendid(1);
-        bMessage.setOrderid(uid);
-        bMessage.setTitle("您的升级需要审核");
-        bMessage.setDiscription("您此次升级需要联系此人进行审核：" + checkDao.myCheck(uid).checkingToString());
-        messageService.sendMessage(bMessage);
+        if (spec == null) {
+           lvUpOpe(uid,sid);
+        } else {
+            FLvupcheck check = new FLvupcheck();
+            check.setLowuid(uid);
+            check.setHeightuid(spec.getUid());
+            check.setStatus(0);
+            check.setSid(sid);
+            checkDao.insert(check);
+            BMessage bMessage = new BMessage();
+            bMessage.setType(1);
+            bMessage.setSendid(1);
+            bMessage.setOrderid(uid);
+            bMessage.setTitle("您的升级需要审核");
+            bMessage.setDiscription("您此次升级需要联系此人进行审核：" + checkDao.myCheck(uid).checkingToString());
+            messageService.sendMessage(bMessage);
+        }
     }
 }

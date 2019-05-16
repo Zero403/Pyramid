@@ -18,16 +18,16 @@ import java.util.List;
  */
 public interface BMessageMapper extends BaseMapper<BMessage> {
 
-    @Select("select * from b_message where orderId = #{uid} and type != 0 ORDER BY createtime DESC")
+    @Select("select * from b_message where orderid = #{uid} and type != 0 ORDER BY createtime DESC")
     List<BMessage> myMessage(int uid);//我的所有消息
 
-    @Select("select * from b_message where orderId = #{uid} and type = #{type} ORDER BY createTime DESC")
+    @Select("select * from b_message where orderid = #{uid} and type = #{type} ORDER BY createtime DESC")
     List<BMessage> myMessageByType(@Param("uid") int uid, @Param("type") int type);
 
-    @Select("select * from b_message where sendId = #{uid} and type != 0 ORDER BY createTime DESC")
+    @Select("select * from b_message where sendid = #{uid} and type != 0 ORDER BY createtime DESC")
     List<BMessage> sendedMessage(int uid);
 
-    @Insert("INSERT INTO b_message(sendId, orderId, title, discription, createTime) values(#{sendId}, #{orderId}, #{title}, #{discription}, #{createTime})")
+    @Insert("INSERT INTO b_message(sendid, orderid, title, discription, createtime) values(#{sendid}, #{orderid}, #{title}, #{discription}, #{createtime})")
     int insertMessage(BMessage message);
 
 
