@@ -22,13 +22,13 @@ public class FInviteCodeController {
 
     @PostMapping("icode/geticode.do")
     @ApiOperation(value = "获取邀请码", notes = "获取邀请码")
-    public ResultVO getInviteCode(@ApiParam("用户token,键值对传递") @RequestBody String token) {
+    public ResultVO getInviteCode(@ApiParam("用户token,键值对传递") String token) {
         return service.getInviteCode(token);
     }
 
     @GetMapping("icode/checkicode.do")
     @ApiOperation(value = "验证邀请码", notes = "验证邀请码，非必须，已在注册方法集成")
-    public ResultVO checkInviteCode(@ApiParam("邀请码，键值对传递") @RequestBody String inviteCode) {
+    public ResultVO checkInviteCode(@ApiParam("邀请码，键值对传递") String inviteCode) {
         return service.checkInviteCode(inviteCode);
     }
 }

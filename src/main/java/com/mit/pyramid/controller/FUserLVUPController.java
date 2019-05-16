@@ -32,7 +32,7 @@ public class FUserLVUPController {
 
     @PostMapping("user/level/list.do")
     @ApiOperation(value = "用户可升级的列表", notes = "用户可升级的列表，建议使用<select>标签实现")
-    public ResultVO getCanUpLevel(@ApiParam(name = "token", value = "用户的token")@RequestBody String token){
+    public ResultVO getCanUpLevel(@ApiParam(name = "token", value = "用户的token") String token){
         TokenVO tokenVO = TokenUtil.parseToken(token);
         int uid = tokenVO.getUid();
         ResultVO resultVO = lvRequestService.canUptoLevel(uid);
@@ -50,14 +50,14 @@ public class FUserLVUPController {
 
     @PostMapping("user/level/spec.do")
     @ApiOperation(value = "等级审核", notes = "查看我被谁审核")
-    public ResultVO spec(@ApiParam(name = "token", value = "用户的token")@RequestBody String token){
+    public ResultVO spec(@ApiParam(name = "token", value = "用户的token") String token){
         int uid = TokenUtil.parseToken(token).getUid();
         return checkService.myCheck(uid);
     }
 
     @PostMapping("user/level/checklist.do")
     @ApiOperation(value = "审核列表", notes = "审核列表")
-    public ResultVO checkList(@ApiParam(name = "token", value = "用户的token")@RequestBody String token){
+    public ResultVO checkList(@ApiParam(name = "token", value = "用户的token") String token){
         int uid = TokenUtil.parseToken(token).getUid();
         return checkService.checkList(uid);
     }
@@ -72,13 +72,13 @@ public class FUserLVUPController {
 
     @GetMapping("user/level/window.do")
     @ApiOperation(value = "单列出来被审核者的信息，并弹窗", notes = "审核弹窗")
-    public ResultVO checkOne(@ApiParam(name = "id", value = "审核列表元素对应的id值")@RequestBody Integer id) {
+    public ResultVO checkOne(@ApiParam(name = "id", value = "审核列表元素对应的id值") Integer id) {
         return checkService.checkById(id);
     }
 
     @PostMapping("user/exp.do")
     @ApiOperation(value = "用户的邀请积分", notes = "用户积分展示")
-    public ResultVO inviteExp(@ApiParam(name = "token", value = "token")@RequestBody String token) {
+    public ResultVO inviteExp(@ApiParam(name = "token", value = "token") String token) {
         return lVupService.getEXP(token);
     }
 
