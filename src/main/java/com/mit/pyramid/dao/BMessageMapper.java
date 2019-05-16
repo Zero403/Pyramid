@@ -29,6 +29,4 @@ public interface BMessageMapper extends BaseMapper<BMessage> {
 
     @Insert("INSERT INTO b_message(sendid, orderid, title, discription, createtime) values(#{sendid}, #{orderid}, #{title}, #{discription}, #{createtime})")
     int insertMessage(BMessage message);
-
-
 }
