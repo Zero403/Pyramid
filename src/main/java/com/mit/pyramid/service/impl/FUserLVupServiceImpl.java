@@ -41,34 +41,40 @@ public class FUserLVupServiceImpl implements FUserLVupService {
     @Override
     public ResultVO lvUp(int uid, int sid) {
         if (sid == 101) {
-            sendCheck(uid,sid);
+            sendCheck(uid, sid);
             return ResultUtil.setOK("等待审核");
         } else {
             int exp = inviteEXPDao.selectById(uid).getInvitenumbers();
             int maxnum = userDao.selectCount(null);
-            Map<Integer ,Integer > proptton = bProportionService.findProporton();
+            Map<Integer, Integer> proptton = bProportionService.findProporton();
             int constLV = proptton.get(5) + proptton.get(9) + proptton.get(13);
             int lv5 = maxnum * (proptton.get(5) / constLV);
             int lv9 = maxnum * (proptton.get(9) / constLV);
             int lv13 = maxnum * (proptton.get(13) / constLV);
 
             if (sid == 105 && exp >= SystemConst.UPNEED.get(104)) {
-               if(userStatusDao.lv5num() > lv5) {
-                   return ResultUtil.setERROR("抱歉，当前等级人数较多。");
-               }
-                sendCheck(uid,sid);
-                return ResultUtil.setOK("等待审核");
-            } else if (sid == 109 && exp >= SystemConst.UPNEED.get(108)) {
-                if(userStatusDao.lv9num() > lv9) {
+                if (userStatusDao.lv5num() > lv5) {
                     return ResultUtil.setERROR("抱歉，当前等级人数较多。");
                 }
-                sendCheck(uid,sid);
+                if (!sendCheck(uid, sid)) {
+                    return ResultUtil.setERROR("您已经提交过您的审核了");
+                }
                 return ResultUtil.setOK("等待审核");
-            } else if(sid == 113 && userStatusDao.lv13num() > lv13) {
+            } else if (sid == 109 && exp >= SystemConst.UPNEED.get(108)) {
+                if (userStatusDao.lv9num() > lv9) {
+                    return ResultUtil.setERROR("抱歉，当前等级人数较多。");
+                }
+                if (!sendCheck(uid, sid)) {
+                    return ResultUtil.setERROR("您已经提交过您的审核了");
+                }
+                return ResultUtil.setOK("等待审核");
+            } else if (sid == 113 && userStatusDao.lv13num() > lv13) {
                 return ResultUtil.setERROR("抱歉，当前等级人数较多。");
             } else {
                 if (exp > SystemConst.UPNEED.get(sid)) {
-                    sendCheck(uid,sid);
+                    if (!sendCheck(uid, sid)) {
+                        return ResultUtil.setERROR("您已经提交过您的审核了");
+                    }
                     return ResultUtil.setOK("等待审核");
                 }
             }
@@ -82,7 +88,7 @@ public class FUserLVupServiceImpl implements FUserLVupService {
         int exp = inviteEXPDao.selectById(uid).getInvitenumbers() * 10;
         Map<String, Integer> expMap = new HashMap<>();
         expMap.put("exp", exp);
-        return ResultUtil.exec(true,"积分", expMap);
+        return ResultUtil.exec(true, "积分", expMap);
 
     }
 
@@ -93,12 +99,15 @@ public class FUserLVupServiceImpl implements FUserLVupService {
         userStatusDao.updateById(fUserStatus);
     }
 
-    private void sendCheck(int uid, int sid) {
-        int specId = sid < 105 ? 105:(sid < 109? 109 : 113);
+    private boolean sendCheck(int uid, int sid) {
+        int specId = sid < 105 ? 105 : (sid < 109 ? 109 : 113);
         FUserStatus spec = userStatusDao.rand1SpecialUser(specId);
         if (spec == null) {
-           lvUpOpe(uid,sid);
+            lvUpOpe(uid, sid);
         } else {
+            if (checkDao.myCheck(uid) != null) {
+                return false;
+            }
             FLvupcheck check = new FLvupcheck();
             check.setLowuid(uid);
             check.setHeightuid(spec.getUid());
@@ -113,5 +122,7 @@ public class FUserLVupServiceImpl implements FUserLVupService {
             bMessage.setDiscription("您此次升级需要联系此人进行审核：" + checkDao.myCheck(uid).checkingToString());
             messageService.sendMessage(bMessage);
         }
+        return true;
     }
+
 }
