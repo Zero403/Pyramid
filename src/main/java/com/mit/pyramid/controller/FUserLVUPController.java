@@ -62,7 +62,7 @@ public class FUserLVUPController {
         return checkService.checkList(uid);
     }
 
-    @GetMapping("user/level/checkok.do")
+    @PostMapping("user/level/checkok.do")
     @ApiOperation(value = "审核结果", notes = "是否同意审核")
     public ResultVO checkFlag(@ApiParam(name = "checkResultVO", value = "审核结果，id:审批人提供的表id, flag:1--同意，2--不同意")@RequestBody CheckResultVO checkResultVO) {
         int cid = checkResultVO.getId();
