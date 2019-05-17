@@ -2,6 +2,7 @@ package com.mit.pyramid.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mit.pyramid.entity.FUserStatus;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -21,6 +22,9 @@ public interface FUserStatusMapper extends BaseMapper<FUserStatus> {
     int lv9num();
     @Select("select count(*) from f_user_status where sid = 113")
     int lv13num();
+
+    @Insert("insert into f_user_status values(#{uid}, #{sid})")
+    int insertKey(FUserStatus fUserStatus);
 
     /**
      * 随机选一个特殊等级的用户

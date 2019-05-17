@@ -2,6 +2,7 @@ package com.mit.pyramid.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mit.pyramid.entity.FUserInvitenubers;
+import org.apache.ibatis.annotations.Insert;
 
 /**
  * <p>
@@ -12,5 +13,8 @@ import com.mit.pyramid.entity.FUserInvitenubers;
  * @since 2019-05-01
  */
 public interface FUserInvitenubersMapper extends BaseMapper<FUserInvitenubers> {
+
+    @Insert("insert into f_user_invitenubers values(#{uid}, #{invitenumbers})")
+    int insertKey(FUserInvitenubers invitenubers);
 
 }
