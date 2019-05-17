@@ -62,16 +62,16 @@ public class FUserBasicController {
 
     @PostMapping("user/findInvitor.do")
     @ApiOperation(value = "查询我的邀请")
-    public ResultVO invitorList(@RequestParam("page") @ApiParam(name = "page",value = "起始页数") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "条数")int count){
-        IPage<FUserBasic> list = fUserBasicService.page(new Page<FUserBasic>(page, count), new QueryWrapper<FUserBasic>().eq("inviterid", "2"));
+    public ResultVO invitorList(@RequestParam("page") @ApiParam(name = "page",value = "起始页数") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "条数")int count,String token){
+        IPage<FUserBasic> list = fUserBasicService.page(new Page<FUserBasic>(page, count), new QueryWrapper<FUserBasic>().eq("inviterid", TokenUtil.parseToken(token).getUid()));
 
         return ResultUtil.exec(list.getTotal() > 0,"",list);
     }
 
     @PostMapping("user/findInvited.do")
     @ApiOperation(value = "查询被我审核的")
-    public ResultVO invitedList(@RequestParam("page") @ApiParam(name = "page",value = "起始页数") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "条数")int count){
-        IPage<FUserBasic> list = fUserBasicService.page(new Page<FUserBasic>(page, count), new QueryWrapper<FUserBasic>().eq("inviterid", "2"));
+    public ResultVO invitedList(@RequestParam("page") @ApiParam(name = "page",value = "起始页数") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "条数")int count,String token){
+        IPage<FUserBasic> list = fUserBasicService.page(new Page<FUserBasic>(page, count), new QueryWrapper<FUserBasic>().eq("inviterid", TokenUtil.parseToken(token).getUid()));
 
         return ResultUtil.exec(list.getTotal() > 0,"",list);
     }
