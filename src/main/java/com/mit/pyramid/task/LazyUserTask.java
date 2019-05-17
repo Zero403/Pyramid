@@ -63,7 +63,7 @@ public class LazyUserTask {
                 bRecord.setContent("长时间未登录被降级至" + (id -1));
                 bRecord.setCreatetime(new Date());
                 bRecord.setType(1);
-                bRecord.setCuid(0);
+                bRecord.setCid(0);
                 bRecord.setUid(user.getId());
                 bMessageService.save(message);
                 recordService.save(bRecord);
