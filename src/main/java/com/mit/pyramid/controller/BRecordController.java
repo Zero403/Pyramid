@@ -24,7 +24,7 @@ public class BRecordController {
     @ApiOperation(value = "分页展示所有奖励消息")
     public ResultVO reward(@RequestParam("page") @ApiParam(name = "page",value = "起始页数") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "条数")int count){
         Page<BRecord> list = new Page<>(page, count);
-        IPage<BRecord> ipage = bRecordService.page(list, new QueryWrapper<BRecord>().eq("type", 0));
+        IPage<BRecord> ipage = bRecordService.page(list, new QueryWrapper<BRecord>().eq("type", 0).eq("cid",2));
 
         return ResultUtil.exec(ipage.getRecords().size() > 0,"",list);
     }
@@ -33,7 +33,7 @@ public class BRecordController {
     @ApiOperation(value = "分页展示所有惩罚消息")
     public ResultVO punish(@RequestParam("page") @ApiParam(name = "page",value = "起始页数") int page, @RequestParam("limit") @ApiParam(name = "limit",value = "条数")int count){
         Page<BRecord> list = new Page<>(page, count);
-        IPage<BRecord> ipage = bRecordService.page(list, new QueryWrapper<BRecord>().eq("type", 1));
+        IPage<BRecord> ipage = bRecordService.page(list, new QueryWrapper<BRecord>().eq("type", 1).eq("cid",2));
 
         return ResultUtil.exec(ipage.getRecords().size() > 0,"",list);
     }

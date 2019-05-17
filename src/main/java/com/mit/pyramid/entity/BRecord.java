@@ -19,7 +19,7 @@ public class BRecord extends Model<BUserLevelDown> {
     private Integer id;
     private Integer type;
     private Integer uid;
-    private Integer cuid;
+    private Integer cid;
     private String content;
     private Date createtime;
 
