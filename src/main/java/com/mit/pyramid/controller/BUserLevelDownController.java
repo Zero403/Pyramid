@@ -89,7 +89,7 @@ public class BUserLevelDownController {
         bRecord.setContent("长时间未登录被降级至" + (lid -1));
         bRecord.setCreatetime(new Date());
         bRecord.setType(1);
-        bRecord.setCuid(user.getId());
+        bRecord.setCid(user.getId());
         bRecord.setUid(user.getId());
 
         bMessageService.save(message);
