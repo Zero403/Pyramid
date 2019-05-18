@@ -224,7 +224,7 @@ public class FUserBasicController {
         fUserBasic.setHeadpic(fileName);
 //        fUserBasic.setHeadpic(path);
 //        fUserBasic.setId(1);
-        return ResultUtil.exec(fUserBasicService.updateById(fUserBasic),"修改用户信息",null);
+        return ResultUtil.exec(fUserBasicService.updateById(fUserBasic),"修改用户信息",fileName);
     }
     @PutMapping("user/updateInfo.do")
     @ApiOperation(value = "修改用户除头像外信息")
@@ -232,6 +232,6 @@ public class FUserBasicController {
 
         TokenVO tokenVO = TokenUtil.parseToken(token);
         fUserBasic.setId(tokenVO.getUid());
-        return ResultUtil.exec(fUserBasicService.updateById(fUserBasic),"修改用户信息",null);
+        return ResultUtil.exec(fUserBasicService.updateById(fUserBasic),"修改用户信息",fUserBasic);
     }
 }
