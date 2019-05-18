@@ -28,7 +28,7 @@ public class BRecordController {
         Page<BRecord> list = new Page<>(page, count);
         IPage<BRecord> ipage = bRecordService.page(list, new QueryWrapper<BRecord>().eq("type", 0).eq("uid",TokenUtil.parseToken(token).getUid()));
 
-        return ResultUtil.exec(ipage.getRecords().size() > 0,"",list);
+        return ResultUtil.exec(ipage.getRecords().size() > 0,"",ipage);
     }
 
     @PostMapping("/punish.do")
@@ -37,6 +37,6 @@ public class BRecordController {
         Page<BRecord> list = new Page<>(page, count);
         IPage<BRecord> ipage = bRecordService.page(list, new QueryWrapper<BRecord>().eq("type", 1).eq("uid",TokenUtil.parseToken(token).getUid()));
 
-        return ResultUtil.exec(ipage.getRecords().size() > 0,"",list);
+        return ResultUtil.exec(ipage.getRecords().size() > 0,"",ipage);
     }
 }

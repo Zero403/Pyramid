@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.mit.pyramid.entity.BComplain;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -99,12 +101,20 @@ public class BComplainVO {
 
         public static BComplainVO parseBComplain(BComplain bComplain){
             List<String> list = new ArrayList<>();
-            list.add(bComplain.getImg1());
-            list.add(bComplain.getImg2());
-            list.add(bComplain.getImg3());
-            list.add(bComplain.getImg4());
-            list.add(bComplain.getImg5());
-            list.add(bComplain.getImg6());
+            for (int i = 1; i <= 6; i++) {
+                Field[] fields = bComplain.getClass().getDeclaredFields();
+                Method[] methods = bComplain.getClass().getDeclaredMethods();
+                for(Field field : fields) {
+                    try {
+                        field.setAccessible(true);
+                        if (field.getName().endsWith(String.valueOf(i)) && field.get(bComplain) != null) {
+                            list.add(field.get(bComplain).toString());
+                        }
+                    } catch (IllegalAccessException e) {
+                        list.add(null);
+                    }
+                }
+            }
             BComplainVO bComplainVO = new BComplainVO();
             bComplainVO.setImglist(list);
             bComplainVO.setContent(bComplain.getContent());
