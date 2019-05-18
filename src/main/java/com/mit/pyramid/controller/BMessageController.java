@@ -1,5 +1,7 @@
 package com.mit.pyramid.controller;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.mit.pyramid.common.util.ResultUtil;
 import com.mit.pyramid.common.util.TokenUtil;
 import com.mit.pyramid.common.vo.ResultVO;
 import com.mit.pyramid.entity.BMessage;
@@ -43,5 +45,13 @@ public class BMessageController {
     @ApiOperation(value = "发送系统消息", notes = "type:1全体发送2对应星发送3单人发送  value:全体可以为任意值对应星则是星单人则是Id title标题description内容")
     public ResultVO batchMessage(@RequestParam("type")@ApiParam(name = "type",value = "类型") Integer type, @RequestParam("value")@ApiParam(name = "value",value = "值") Integer value, @RequestParam("title")@ApiParam(name = "title",value = "标题") String title, @RequestParam("description")@ApiParam(name = "description",value = "内容") String description){
         return messageService.batchMessage(type, value, title, description);
+    }
+
+    @GetMapping("/checkmessage.do")
+    @ApiOperation(value = "查看消息详情", notes = "查看对应 ID的消息")
+    public ResultVO checkMessage(@RequestParam("messageId") @ApiParam(name = "messageId",value = "消息ID")Integer messageId){
+        BMessage bMessage = messageService.getById(messageId);
+        messageService.update(new UpdateWrapper<BMessage>().set("type", 2).eq("id", messageId));
+        return ResultUtil.exec(true, "", bMessage);
     }
 }
