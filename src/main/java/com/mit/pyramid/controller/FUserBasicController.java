@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -187,6 +188,16 @@ public class FUserBasicController {
     public ResultVO findInfo(String token){
         FUserBasic user = fUserBasicService.getById(TokenUtil.parseToken(token).getUid());
         return ResultUtil.exec(true, "",user);
+
+    }
+
+    @PostMapping("user/invitername.do")
+    @ApiOperation(value = "邀请人的信息")
+    public ResultVO findName(@ApiParam("邀请人的id") Integer inviterid){
+        FUserBasic user = fUserBasicService.getById(inviterid);
+        Map<String, Object> map = new HashMap<>();
+        map.put("iname", user.getUsername());
+        return ResultUtil.exec(true, "",map);
 
     }
 
