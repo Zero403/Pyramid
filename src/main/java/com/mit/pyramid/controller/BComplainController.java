@@ -110,8 +110,9 @@ public class BComplainController {
         for (MultipartFile upfile:imglist) {
             // 获取上传文件的文件名
             String fileName = upfile.getOriginalFilename();
-            fileName = UUID.randomUUID().toString().replace("-","");
+            fileName = UUID.randomUUID().toString().replace("-","") + "." + fileName.substring(fileName.lastIndexOf(".") + 1);
             String path = SystemConst.FILEPATH;
+            // String path = "E:\\11";
             // System.out.println(path);
             File parentPath = new File(path);
             File dirPath = new File(path);
