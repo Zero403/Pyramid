@@ -34,6 +34,6 @@ public interface FUserStatusMapper extends BaseMapper<FUserStatus> {
     @Select("select * from f_user_status where sid = #{sid} order by rand() limit 1 ")
     FUserStatus rand1SpecialUser(@Param("sid") Integer sid);
 
-
-
+    @Select("select s.sname from f_user_status u inner join f_status s on u.sid = s.id where u.uid = #{uid}")
+    String getStatusName(@Param("uid") Integer uid);
 }

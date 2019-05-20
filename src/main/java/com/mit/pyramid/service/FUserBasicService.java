@@ -35,4 +35,6 @@ public interface FUserBasicService extends IService<FUserBasic> {
 
     //后台等级排行榜
     List<BUserRankVO> rankList();
+
+    ResultVO getStatus(int uid);
 }

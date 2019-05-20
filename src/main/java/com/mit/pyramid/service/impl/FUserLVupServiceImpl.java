@@ -72,7 +72,7 @@ public class FUserLVupServiceImpl implements FUserLVupService {
                 return ResultUtil.setERROR("抱歉，当前等级人数较多。");
             } else {
                 if (exp > SystemConst.UPNEED.get(sid)) {
-                    if (!sendCheck(uid, sid)) {
+                    if (! sendCheck(uid, sid)) {
                         return ResultUtil.setERROR("您已经提交过您的审核了");
                     }
                     return ResultUtil.setOK("等待审核");
@@ -97,6 +97,11 @@ public class FUserLVupServiceImpl implements FUserLVupService {
         fUserStatus.setUid(uid);
         fUserStatus.setSid(sid);
         userStatusDao.updateById(fUserStatus);
+        BMessage bMessage = new BMessage();
+        bMessage.setType(1);
+        bMessage.setSendid(1);
+        bMessage.setOrderid(uid);
+        bMessage.setTitle("恭喜你，本次升级直接升级成功！！");
     }
 
     private boolean sendCheck(int uid, int sid) {
