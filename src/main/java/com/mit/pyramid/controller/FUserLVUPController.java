@@ -50,7 +50,7 @@ public class FUserLVUPController {
 
     @PostMapping("user/level/spec.do")
     @ApiOperation(value = "等级审核", notes = "查看我被谁审核")
-    public ResultVO spec(@ApiParam(name = "token", value = "用户的token") String token){
+    public ResultVO spec(@ApiParam(name = "token", value = "用户的token")@RequestBody String token){
         int uid = TokenUtil.parseToken(token).getUid();
         return checkService.myCheck(uid);
     }

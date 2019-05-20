@@ -20,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -99,6 +101,14 @@ public class FUserBasicServiceImpl extends ServiceImpl<FUserBasicMapper, FUserBa
     @Override
     public List<BUserRankVO> rankList() {
         return dao.rankList();
+    }
+
+    @Override
+    public ResultVO getStatus(int uid) {
+        String statusName = statusdao.getStatusName(uid);
+        Map<String, Object> map = new HashMap<>();
+        map.put("sname", statusName);
+        return ResultUtil.exec(true,"查询成功", map);
     }
 
     @Override

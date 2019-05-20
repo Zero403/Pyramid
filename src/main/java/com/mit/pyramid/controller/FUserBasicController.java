@@ -234,4 +234,11 @@ public class FUserBasicController {
         fUserBasic.setId(tokenVO.getUid());
         return ResultUtil.exec(fUserBasicService.updateById(fUserBasic),"修改用户信息",fUserBasic);
     }
+
+    @PostMapping("user/level.do")
+    @ApiOperation(value = "我的等级")
+    public ResultVO myLevel(@ApiParam("token") String token) {
+        int uid = TokenUtil.parseToken(token).getUid();
+        return fUserBasicService.getStatus(uid);
+    }
 }

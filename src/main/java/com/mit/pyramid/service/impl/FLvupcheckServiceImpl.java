@@ -56,7 +56,7 @@ public class FLvupcheckServiceImpl extends ServiceImpl<FLvupcheckMapper, FLvupch
     @Override
     public ResultVO myCheck(Integer uid) {
         CheckVO mycheck = checkDao.myCheck(uid);
-        if (mycheck.getId() == null) {
+        if (mycheck == null) {
             return ResultUtil.setERROR("不需要审核");
         } else {
             return ResultUtil.exec(true,"您需要联系此人审核",mycheck);
